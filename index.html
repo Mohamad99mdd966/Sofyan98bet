@@ -3,49 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>صوفیان بت | Sofyan.bet — اتصال زنده به سرور</title>
+  <title>صوفیان بت | Sofyan.bet — حساب دمو، کارت به کارت و برداشت واقعی</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     html, body { max-width: 100%; overflow-x: hidden; }
     body {
       font-family: Tahoma, "Vazirmatn", sans-serif;
-      background-color: #090d16;
-      color: #f8fafc;
-      min-height: 100vh;
-      line-height: 1.6;
+      background-color: #090d16; color: #f8fafc; min-height: 100vh; line-height: 1.6;
     }
     button, input, select, textarea { font-family: inherit; color: inherit; }
     button { cursor: pointer; border: none; background: transparent; touch-action: manipulation; }
     button:disabled { opacity: 0.45; cursor: not-allowed; }
     input, select, textarea {
-      background: #111827;
-      color: #f8fafc;
-      border: 1px solid #334155;
-      border-radius: 10px;
-      padding: 10px 12px;
-      width: 100%;
-      font-size: 15px;
+      background: #111827; color: #f8fafc; border: 1px solid #334155;
+      border-radius: 10px; padding: 10px 12px; width: 100%; font-size: 15px;
     }
     .mono { font-family: monospace; direction: ltr; unicode-bidi: isolate; }
 
     .topbar {
-      background: #111827;
-      border-bottom: 1px solid #1f2937;
-      padding: 10px 14px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      position: sticky;
-      top: 0;
-      z-index: 30;
+      background: #111827; border-bottom: 1px solid #1f2937;
+      padding: 10px 14px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px;
+      position: sticky; top: 0; z-index: 30;
     }
     .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1rem; color: #fbbf24; }
     .brand-badge {
       width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
-      background: #f59e0b; color: #090d16;
-      display: grid; place-items: center; font-weight: 900; font-size: 1.15rem;
+      background: #f59e0b; color: #090d16; display: grid; place-items: center; font-weight: 900; font-size: 1.15rem;
     }
     .srv-pill {
       font-size: 0.72rem; padding: 4px 9px; border-radius: 999px;
@@ -56,9 +39,13 @@
     .top-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
     .wallet-box {
       background: #1e293b; border: 1px solid #334155;
-      padding: 6px 10px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; color: #34d399;
-      white-space: nowrap;
+      padding: 6px 10px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; color: #34d399; white-space: nowrap;
     }
+    .mode-switch { display: inline-flex; background: #0b101d; border: 1px solid #334155; border-radius: 9px; overflow: hidden; }
+    .mode-btn { padding: 7px 10px; font-size: 0.76rem; font-weight: 800; color: #94a3b8; }
+    .mode-btn.active-demo { background: #38bdf8; color: #061826; }
+    .mode-btn.active-real { background: #10b981; color: #052014; }
+
     .btn {
       padding: 9px 13px; border-radius: 9px; font-weight: 700; font-size: 0.82rem;
       display: inline-flex; align-items: center; justify-content: center; gap: 5px;
@@ -70,38 +57,43 @@
 
     .nav-row { display: flex; flex-wrap: wrap; gap: 6px; width: 100%; order: 3; }
     .nav-btn {
-      flex: 1 1 auto; text-align: center;
-      padding: 8px 10px; border-radius: 8px;
+      flex: 1 1 auto; text-align: center; padding: 8px 10px; border-radius: 8px;
       background: #1e293b; color: #e2e8f0; font-size: 0.78rem; font-weight: 700;
     }
     .nav-btn.active { background: #f59e0b; color: #090d16; }
+    .nav-btn.admin-only { display: none; border: 1px solid #f59e0b; color: #fbbf24; }
+    .nav-btn.admin-only.visible { display: inline-block; }
+    .nav-btn.admin-only.active { color: #090d16; }
 
     .container { max-width: 1320px; margin: 0 auto; padding: 14px; }
     .section { display: none; }
     .section.active { display: block; }
 
-    .panel {
-      background: #111827; border: 1px solid #263248; border-radius: 14px;
-      padding: 14px; margin-bottom: 14px;
-    }
-    .grid-cards {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
-      gap: 14px; margin-bottom: 16px;
-    }
-    .game-card {
-      background: #111827; border: 1px solid #263248; border-radius: 14px;
-      padding: 14px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px;
-    }
-
-    .arena { display: grid; grid-template-columns: 330px 1fr; gap: 14px; align-items: start; }
+    .panel { background: #111827; border: 1px solid #263248; border-radius: 14px; padding: 14px; margin-bottom: 14px; }
+    .arena { display: grid; grid-template-columns: 360px 1fr; gap: 14px; align-items: start; }
     .field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; font-size: 0.82rem; color: #cbd5e1; }
 
-    /* Crash */
-    .crash-grid { display: grid; grid-template-columns: 1.8fr 1fr; gap: 14px; align-items: start; }
-    .crash-stage {
-      background: #070b14; border: 1px solid #334155; border-radius: 12px;
-      padding: 18px 12px; text-align: center; margin-bottom: 12px;
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-bottom: 14px;
     }
+    .stat-card {
+      background: #0b101d; border: 1px solid #263248; border-radius: 12px; padding: 14px;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .stat-label { font-size: 0.78rem; color: #94a3b8; }
+    .stat-val { font-size: 1.15rem; font-weight: 900; color: #fbbf24; }
+    .stat-val.green { color: #34d399; }
+    .stat-val.red { color: #f87171; }
+    .stat-sub { font-size: 0.72rem; color: #cbd5e1; }
+
+    .card-banner {
+      background: #070b14; border: 1px solid #f59e0b; border-radius: 12px;
+      padding: 12px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 4px;
+    }
+    .card-num { font-size: 1.05rem; font-weight: 900; color: #fbbf24; letter-spacing: 1px; }
+
+    .crash-grid { display: grid; grid-template-columns: 1.8fr 1fr; gap: 14px; align-items: start; }
+    .crash-stage { background: #070b14; border: 1px solid #334155; border-radius: 12px; padding: 18px 12px; text-align: center; margin-bottom: 12px; }
     .crash-mult { font-size: clamp(2.1rem, 8vw, 3.2rem); font-weight: 900; color: #fbbf24; }
     .crash-mult.crashed { color: #f87171; }
     .crash-mult.won { color: #34d399; }
@@ -120,31 +112,14 @@
     .chat-msg { background: #151e32; padding: 8px 10px; border-radius: 8px; font-size: 0.8rem; word-break: break-word; }
     .chat-msg strong { color: #38bdf8; display: block; font-size: 0.74rem; margin-bottom: 2px; }
 
-    /* Mines */
-    .mines-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; max-width: 400px; margin: 0 auto; }
-    .mine-cell {
-      aspect-ratio: 1; border-radius: 10px; background: #1e293b; border: 1px solid #334155;
-      font-size: 1.25rem; font-weight: 800; display: grid; place-items: center;
+    .dep-item, .ticket-item {
+      background: #0b101d; border: 1px solid #263248; border-radius: 12px; padding: 12px; margin-bottom: 10px;
     }
-    .mine-cell.gem { background: rgba(16, 185, 129, 0.22); border-color: #10b981; color: #34d399; }
-    .mine-cell.bomb { background: rgba(239, 68, 68, 0.25); border-color: #ef4444; color: #f87171; }
-
-    /* Dice & Roulette & Plinko */
-    .dice-card, .r-stage { background: #0b101d; border: 1px solid #263248; border-radius: 12px; padding: 22px; text-align: center; }
-    .dice-num, .r-ball { font-size: 2.7rem; font-weight: 900; margin: 8px 0; color: #38bdf8; }
-    .r-opts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px; }
-    .r-opt { padding: 9px; border-radius: 8px; background: #1e293b; border: 1px solid #334155; font-size: 0.8rem; font-weight: 700; }
-    .r-opt.active { background: rgba(245, 158, 11, 0.2); border-color: #f59e0b; color: #fbbf24; }
-    .plinko-slots { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-top: 12px; }
-    .p-slot { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px 3px; text-align: center; font-size: 0.74rem; font-weight: 800; }
-    .p-slot.hit { background: #f59e0b; color: #090d16; border-color: #f59e0b; }
-
-    /* Tickets */
-    .ticket-item { background: #0b101d; border: 1px solid #263248; border-radius: 12px; padding: 12px; margin-bottom: 10px; }
-    .ticket-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
-    .badge-open { background: rgba(16, 185, 129, 0.2); color: #34d399; padding: 2px 8px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; }
-    .badge-topic { background: rgba(245, 158, 11, 0.18); color: #fbbf24; padding: 2px 8px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; }
-    .ticket-reply { background: #151e32; border-right: 3px solid #38bdf8; padding: 8px 10px; border-radius: 8px; margin-top: 8px; font-size: 0.8rem; }
+    .badge-status { padding: 2px 8px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; }
+    .st-pending { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+    .st-approved { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .st-rejected { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+    .ticket-reply { background: #151e32; border-right: 3px solid #34d399; padding: 8px 10px; border-radius: 8px; margin-top: 8px; font-size: 0.8rem; }
 
     .table-wrap { width: 100%; overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; font-size: 0.8rem; min-width: 440px; }
@@ -193,67 +168,43 @@
     </div>
 
     <div class="top-actions">
+      <div class="mode-switch">
+        <button type="button" class="mode-btn active-demo" id="modeDemoBtn" onclick="setWalletMode('demo')">دمو</button>
+        <button type="button" class="mode-btn" id="modeRealBtn" onclick="setWalletMode('real')">واقعی</button>
+      </div>
       <div class="wallet-box" id="balanceDisplay">10,000,000 تومان</div>
-      <button class="btn btn-green" onclick="quickDeposit()">+ واریز</button>
-      <button class="btn btn-gold" id="authTopBtn" onclick="openAuth()">ورود</button>
+      <button class="btn btn-green" onclick="showTab('deposit', document.getElementById('navDepositBtn'))">💳 واریز / برداشت</button>
+      <button class="btn btn-gold" id="authTopBtn" onclick="openAuth()">ورود / JWT</button>
     </div>
 
     <div class="nav-row">
-      <button class="nav-btn active" onclick="showTab('home', this)">🏠 بازی‌ها</button>
-      <button class="nav-btn" onclick="showTab('crash', this)">🚀 انفجار</button>
-      <button class="nav-btn" onclick="showTab('mines', this)">💣 مین</button>
-      <button class="nav-btn" onclick="showTab('dice', this)">🎲 تاس</button>
-      <button class="nav-btn" onclick="showTab('roulette', this)">🎡 رولت</button>
-      <button class="nav-btn" onclick="showTab('plinko', this)">⚪ پلینکو</button>
+      <button class="nav-btn active" onclick="showTab('crash', this)">🚀 انفجار</button>
+      <button class="nav-btn" id="navDepositBtn" onclick="showTab('deposit', this)">💳 واریز و برداشت واقعی</button>
       <button class="nav-btn" onclick="showTab('support', this)">🎫 پشتیبانی</button>
       <button class="nav-btn" onclick="showTab('history', this)">📜 شرط‌ها</button>
+      <button class="nav-btn admin-only" id="adminFinanceNavBtn" onclick="showTab('finance', this)">📊 آمار مالی</button>
+      <button class="nav-btn admin-only" id="adminUsersNavBtn" onclick="showTab('users', this)">🛡️ کاربران</button>
     </div>
   </header>
 
   <main class="container">
-    <!-- Server Connection Bar -->
     <div class="panel" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;">
-      <div style="font-size:0.82rem;color:#cbd5e1;">
-        <strong>آدرس سرور Node.js / WebSocket:</strong>
-      </div>
+      <div style="font-size:0.82rem;color:#cbd5e1;"><strong>آدرس سرور:</strong></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;flex:1;max-width:560px;">
         <input type="text" id="serverUrlInput" class="mono" value="http://localhost:4000" style="flex:1;min-width:190px;padding:7px 10px;font-size:0.82rem;" />
-        <button class="btn btn-gold" onclick="applyServerUrl()">اتصال مجدد</button>
+        <button class="btn btn-gold" onclick="applyServerUrl()">اتصال</button>
       </div>
     </div>
 
-    <!-- HOME -->
-    <section class="section active" id="tab-home">
-      <div class="grid-cards">
-        <div class="game-card">
-          <div>
-            <h3>🚀 انفجار دوشرطه + چت زنده</h3>
-            <p style="font-size:0.8rem;color:#94a3b8;margin-top:4px;">ضریب لحظه‌ای و تاریخچه همگام با سرور WebSocket</p>
-          </div>
-          <button class="btn btn-gold" onclick="goTab('crash')">ورود به انفجار</button>
-        </div>
-        <div class="game-card">
-          <div>
-            <h3>💣 مین، تاس، رولت و پلینکو</h3>
-            <p style="font-size:0.8rem;color:#94a3b8;margin-top:4px;">ثبت نتیجه شرط‌ها و به‌روزرسانی موجودی</p>
-          </div>
-          <button class="btn btn-green" onclick="goTab('mines')">شروع بازی‌ها</button>
-        </div>
-        <div class="game-card">
-          <div>
-            <h3>🎫 تیکت پشتیبانی با موضوع</h3>
-            <p style="font-size:0.8rem;color:#94a3b8;margin-top:4px;">ارسال و دریافت لیست تیکت‌ها از سرور</p>
-          </div>
-          <button class="btn btn-gray" onclick="goTab('support')">مدیریت تیکت‌ها</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- CRASH -->
-    <section class="section" id="tab-crash">
+    <section class="section active" id="tab-crash">
       <div class="crash-grid">
         <div>
           <div class="panel">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
+              <div style="font-size:0.82rem;color:#cbd5e1;" id="activeModeBanner">حالت فعال: <strong>حساب دمو</strong></div>
+              <button type="button" class="btn btn-gray" style="padding:5px 10px;font-size:0.76rem;" onclick="topupDemo()">+ شارژ دمو</button>
+            </div>
+
             <div style="margin-bottom:10px;">
               <div style="font-size:0.8rem;color:#94a3b8;margin-bottom:6px;">تاریخچه راندها (کلیک برای مشاهده هش):</div>
               <div class="history-bar" id="historyPills"></div>
@@ -261,20 +212,20 @@
 
             <div class="crash-stage">
               <div class="crash-mult mono" id="crashMultText">1.00x</div>
-              <div id="crashStatusText" style="color:#94a3b8;font-size:0.86rem;margin-top:4px;">در انتظار ارتباط با راند...</div>
+              <div id="crashStatusText" style="color:#94a3b8;font-size:0.86rem;margin-top:4px;">در انتظار ارتباط با سرور...</div>
             </div>
 
             <div class="dual-bets">
               <div class="bet-box">
                 <strong style="color:#fbbf24;font-size:0.9rem;">پنل شرط ۱</strong>
                 <input type="number" id="betAmt1" value="100000" min="1000" />
-                <input type="number" id="autoCash1" value="2.00" min="1.10" step="0.05" placeholder="برداشت خودکار" />
+                <input type="number" id="autoCash1" value="2.00" min="1.05" step="0.05" placeholder="برداشت خودکار" />
                 <button class="btn btn-gold" id="btnSlot1" onclick="handleSlot(1)">ثبت شرط پنل ۱</button>
               </div>
               <div class="bet-box">
                 <strong style="color:#38bdf8;font-size:0.9rem;">پنل شرط ۲</strong>
                 <input type="number" id="betAmt2" value="50000" min="1000" />
-                <input type="number" id="autoCash2" value="3.00" min="1.10" step="0.05" placeholder="برداشت خودکار" />
+                <input type="number" id="autoCash2" value="3.00" min="1.05" step="0.05" placeholder="برداشت خودکار" />
                 <button class="btn btn-gold" id="btnSlot2" onclick="handleSlot(2)">ثبت شرط پنل ۲</button>
               </div>
             </div>
@@ -284,9 +235,7 @@
             <h3 style="margin-bottom:10px;font-size:0.95rem;">جدول تاریخچه راندهای انفجار</h3>
             <div class="table-wrap">
               <table>
-                <thead>
-                  <tr><th>راند</th><th>ضریب</th><th>هش راند</th><th>زمان</th></tr>
-                </thead>
+                <thead><tr><th>راند</th><th>ضریب</th><th>هش راند</th><th>زمان</th></tr></thead>
                 <tbody id="roundsTableBody"></tbody>
               </table>
             </div>
@@ -304,121 +253,67 @@
       </div>
     </section>
 
-    <!-- MINES -->
-    <section class="section" id="tab-mines">
+    <section class="section" id="tab-deposit">
       <div class="arena">
-        <div class="panel">
-          <h2 style="font-size:1rem;margin-bottom:10px;">💣 بازی مین</h2>
-          <div class="field">
-            <label>مبلغ شرط (تومان)</label>
-            <input type="number" id="minesBet" value="100000" min="1000" />
-          </div>
-          <div class="field">
-            <label>تعداد مین</label>
-            <select id="minesCount">
-              <option value="2">2 مین</option>
-              <option value="3" selected>3 مین</option>
-              <option value="5">5 مین</option>
-              <option value="10">10 مین</option>
-            </select>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <button class="btn btn-gold" id="minesStartBtn" onclick="startMines()">شروع بازی جدید</button>
-            <button class="btn btn-green" id="minesCashBtn" onclick="cashoutMines()" disabled>برداشت جایزه (<span id="minesMultTxt">1.00x</span>)</button>
-          </div>
-        </div>
-        <div class="panel" style="text-align:center;">
-          <div class="mines-grid" id="minesGrid"></div>
-          <div id="minesStatus" style="margin-top:12px;font-size:0.86rem;color:#94a3b8;">برای شروع، مبلغ و تعداد مین را تنظیم کنید.</div>
-        </div>
-      </div>
-    </section>
+        <div>
+          <div class="panel">
+            <div class="card-banner">
+              <div style="font-size:0.78rem;color:#cbd5e1;">واریز کارت به کارت حساب واقعی</div>
+              <div class="card-num mono" id="targetCardNum">6037997410972831</div>
+              <div style="font-size:0.84rem;font-weight:700;color:#34d399;">به نام: محمد مددی صوفیانی</div>
+            </div>
 
-    <!-- DICE -->
-    <section class="section" id="tab-dice">
-      <div class="arena">
-        <div class="panel">
-          <h2 style="font-size:1rem;margin-bottom:10px;">🎲 تاس اورجینال</h2>
-          <div class="field">
-            <label>مبلغ شرط (تومان)</label>
-            <input type="number" id="diceBet" value="50000" min="1000" />
+            <form onsubmit="submitDepositReceipt(event)">
+              <div class="field">
+                <label>مبلغ واریزی (تومان)</label>
+                <input type="number" id="depAmountInput" required min="10000" step="10000" value="500000" />
+              </div>
+              <div class="field">
+                <label>شماره پیگیری / شماره فیش رسید</label>
+                <input type="text" id="depRefInput" required placeholder="مثال: 98431204" />
+              </div>
+              <div class="field">
+                <label>توضیحات فیش (اختیاری)</label>
+                <input type="text" id="depNoteInput" placeholder="ساعت واریز یا نام کارت مبدا" />
+              </div>
+              <button type="submit" class="btn btn-green" style="width:100%;">ارسال فیش برای بررسی ادمین</button>
+            </form>
           </div>
-          <div class="field">
-            <label>عدد هدف (کمتر از): <strong id="diceTargetVal">50</strong> | ضریب: <strong id="diceMultVal" style="color:#fbbf24;">2.02x</strong></label>
-            <input type="range" id="diceTarget" min="5" max="95" value="50" oninput="updateDiceInfo()" />
-          </div>
-          <button class="btn btn-gold" style="width:100%;" onclick="playDice()">پرتاب تاس</button>
-        </div>
-        <div class="panel">
-          <div class="dice-card">
-            <div style="font-size:0.82rem;color:#94a3b8;">عدد تاس (۰.۰۰ تا ۹۹.۹۹)</div>
-            <div class="dice-num mono" id="diceOutNum">50.00</div>
-            <div id="diceOutMsg" style="font-weight:700;color:#cbd5e1;">منتظر پرتاب...</div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- ROULETTE -->
-    <section class="section" id="tab-roulette">
-      <div class="arena">
-        <div class="panel">
-          <h2 style="font-size:1rem;margin-bottom:10px;">🎡 رولت اروپایی</h2>
-          <div class="field">
-            <label>مبلغ شرط (تومان)</label>
-            <input type="number" id="rouletteBet" value="100000" min="1000" />
+          <div class="panel">
+            <h3 style="font-size:0.98rem;margin-bottom:10px;color:#fbbf24;">💸 ثبت درخواست برداشت وجه واقعی</h3>
+            <form onsubmit="submitWithdrawalRequest(event)">
+              <div class="field">
+                <label>مبلغ برداشت (تومان — حداقل ۵۰,۰۰۰)</label>
+                <input type="number" id="wdrAmountInput" required min="50000" step="10000" value="200000" />
+              </div>
+              <div class="field">
+                <label>شماره کارت ۱۶ رقمی مقصد</label>
+                <input type="text" id="wdrCardInput" class="mono" required maxlength="16" placeholder="6037..." />
+              </div>
+              <div class="field">
+                <label>نام صاحب کارت</label>
+                <input type="text" id="wdrHolderInput" placeholder="نام و نام خانوادگی" />
+              </div>
+              <button type="submit" class="btn btn-gold" style="width:100%;">ثبت درخواست برداشت</button>
+            </form>
           </div>
-          <div class="r-opts" id="rouletteOpts">
-            <button class="r-opt active" data-pick="red" onclick="pickRoulette('red')">قرمز (2x)</button>
-            <button class="r-opt" data-pick="black" onclick="pickRoulette('black')">مشکی (2x)</button>
-            <button class="r-opt" data-pick="green" onclick="pickRoulette('green')">صفر 0 (35x)</button>
-            <button class="r-opt" data-pick="even" onclick="pickRoulette('even')">زوج (2x)</button>
-            <button class="r-opt" data-pick="odd" onclick="pickRoulette('odd')">فرد (2x)</button>
-            <button class="r-opt" data-pick="low" onclick="pickRoulette('low')">1-18 (2x)</button>
-          </div>
-          <button class="btn btn-gold" style="width:100%;" onclick="spinRoulette()">چرخاندن رولت</button>
         </div>
-        <div class="panel">
-          <div class="r-stage">
-            <div style="font-size:0.82rem;color:#94a3b8;">نتیجه گردونه</div>
-            <div class="r-ball mono" id="rouletteOut">0</div>
-            <div id="rouletteMsg" style="color:#cbd5e1;">گزینه خود را انتخاب و دکمه چرخاندن را بزنید.</div>
+
+        <div>
+          <div class="panel">
+            <h2 style="font-size:1rem;margin-bottom:12px;">فیش‌های واریزی (تایید یا رد توسط ادمین)</h2>
+            <div id="depositsList"></div>
+          </div>
+
+          <div class="panel">
+            <h2 style="font-size:1rem;margin-bottom:12px;">درخواست‌های برداشت واقعی (تایید یا رد توسط ادمین)</h2>
+            <div id="withdrawalsList"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- PLINKO -->
-    <section class="section" id="tab-plinko">
-      <div class="arena">
-        <div class="panel">
-          <h2 style="font-size:1rem;margin-bottom:10px;">⚪ پلینکو</h2>
-          <div class="field">
-            <label>مبلغ شرط (تومان)</label>
-            <input type="number" id="plinkoBet" value="50000" min="1000" />
-          </div>
-          <div class="field">
-            <label>سطح ریسک</label>
-            <select id="plinkoRisk" onchange="drawPlinkoSlots()">
-              <option value="low">کم (Low)</option>
-              <option value="medium" selected>متوسط (Medium)</option>
-              <option value="high">زیاد (High)</option>
-            </select>
-          </div>
-          <button class="btn btn-gold" style="width:100%;" onclick="dropPlinko()">رها کردن توپ</button>
-        </div>
-        <div class="panel">
-          <div style="background:#0b101d;border:1px solid #263248;border-radius:12px;padding:20px;text-align:center;">
-            <div style="font-size:0.82rem;color:#94a3b8;">مسیر توپ و ضریب</div>
-            <div class="mono" id="plinkoPath" style="margin:8px 0;color:#38bdf8;">L • R • L • R • L • R</div>
-            <div class="mono" id="plinkoMult" style="font-size:2.2rem;font-weight:900;color:#fbbf24;">1.5x</div>
-          </div>
-          <div class="plinko-slots" id="plinkoSlots"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SUPPORT TICKETS -->
     <section class="section" id="tab-support">
       <div class="arena">
         <div class="panel">
@@ -427,10 +322,9 @@
             <div class="field">
               <label>موضوع تیکت</label>
               <select id="ticketTopic" required>
-                <option value="واریز و کیف پول">💳 مشکل واریز و شارژ کیف پول</option>
+                <option value="واریز و کیف پول">💳 مشکل واریز و فیش کارت به کارت</option>
                 <option value="پیگیری برداشت">💸 پیگیری برداشت وجه</option>
                 <option value="گزارش بازی و راند">🎮 گزارش راند یا مشکل در بازی</option>
-                <option value="حساب کاربری">👤 حساب کاربری و یادآوری نشست</option>
                 <option value="بونوس و VIP">🎁 درخواست بونوس و ارتقای VIP</option>
               </select>
             </div>
@@ -443,7 +337,7 @@
             </div>
             <div class="field">
               <label>عنوان تیکت</label>
-              <input type="text" id="ticketSubject" required placeholder="مثال: پیگیری واریز" />
+              <input type="text" id="ticketSubject" required placeholder="مثال: پیگیری برداشت" />
             </div>
             <div class="field">
               <label>شرح پیام</label>
@@ -454,54 +348,93 @@
         </div>
 
         <div class="panel">
-          <h2 style="font-size:1rem;margin-bottom:12px;">تیکت‌های ثبت‌شده</h2>
+          <h2 style="font-size:1rem;margin-bottom:12px;">لیست تیکت‌ها</h2>
           <div id="ticketsList"></div>
         </div>
       </div>
     </section>
 
-    <!-- HISTORY -->
     <section class="section" id="tab-history">
       <div class="panel">
-        <h2 style="margin-bottom:10px;font-size:1.05rem;">📜 تاریخچه شرط‌های من</h2>
+        <h2 style="margin-bottom:10px;font-size:1.05rem;">📜 تاریخچه شرط‌های من (دمو و واقعی)</h2>
         <div class="table-wrap">
           <table>
-            <thead>
-              <tr><th>شناسه</th><th>بازی</th><th>مبلغ شرط</th><th>ضریب</th><th>نتیجه</th></tr>
-            </thead>
+            <thead><tr><th>شناسه</th><th>حالت</th><th>بازی</th><th>مبلغ شرط</th><th>ضریب</th><th>نتیجه</th></tr></thead>
             <tbody id="myBetsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="tab-finance">
+      <div class="panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
+          <h2 style="font-size:1.08rem;">📊 داشبورد آمار مالی واریز و برداشت (ویژه admin)</h2>
+          <button type="button" class="btn btn-gold" onclick="syncFinanceStatsFromServer()">↻ بروزرسانی آمار</button>
+        </div>
+
+        <div class="stats-grid" id="financeCardsGrid"></div>
+
+        <div class="arena">
+          <div class="panel" style="margin-bottom:0;">
+            <h3 style="font-size:0.95rem;margin-bottom:10px;">آخرین واریزهای ثبت‌شده</h3>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>شناسه</th><th>کاربر</th><th>مبلغ</th><th>وضعیت</th></tr></thead>
+                <tbody id="recentDepositsStatsBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-bottom:0;">
+            <h3 style="font-size:0.95rem;margin-bottom:10px;">آخرین برداشت‌های ثبت‌شده</h3>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>شناسه</th><th>کاربر</th><th>مبلغ</th><th>وضعیت</th></tr></thead>
+                <tbody id="recentWithdrawalsStatsBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="tab-users">
+      <div class="panel">
+        <h2 style="margin-bottom:12px;font-size:1.05rem;">🛡️ مدیریت کاربران و نقش‌ها (ویژه admin)</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>شناسه</th><th>نام کاربری</th><th>دمو</th><th>واقعی</th><th>نقش</th><th>عملیات</th></tr></thead>
+            <tbody id="usersAdminBody"></tbody>
           </table>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Auth Modal -->
   <div class="modal-bg" id="authModal">
     <div class="modal-card">
       <div class="modal-head">
-        <h3 style="font-size:1rem;">ورود / ثبت‌نام صوفیان بت</h3>
+        <h3 style="font-size:1rem;">ورود و دریافت توکن JWT</h3>
         <button class="btn btn-gray" onclick="closeAuth()">✕</button>
       </div>
       <form onsubmit="saveUserAuth(event)">
         <div class="field">
           <label>نام کاربری</label>
-          <input type="text" id="authUserInput" required placeholder="مثال: ali_sofyan" />
+          <input type="text" id="authUserInput" required placeholder="مثال: admin یا player1" />
         </div>
         <div class="field">
           <label>رمز عبور</label>
           <input type="password" id="authPassInput" required placeholder="••••••••" />
         </div>
-        <label style="display:flex;align-items:center;gap:8px;font-size:0.84rem;margin-bottom:14px;cursor:pointer;">
-          <input type="checkbox" id="authRememberInput" checked style="width:auto;" />
-          <span>مرا به خاطر بسپار</span>
-        </label>
-        <button type="submit" class="btn btn-gold" style="width:100%;">ذخیره و ورود</button>
+        <div style="font-size:0.74rem;color:#94a3b8;margin-bottom:12px;">
+          حساب پیش‌فرض ادمین: <span class="mono">admin / admin123</span>
+        </div>
+        <button type="submit" class="btn btn-gold" style="width:100%;">ورود به حساب</button>
       </form>
     </div>
   </div>
 
-  <!-- Round Detail Modal -->
   <div class="modal-bg" id="roundModal">
     <div class="modal-card">
       <div class="modal-head">
@@ -515,24 +448,27 @@
   <div class="toast-wrap" id="toastWrap"></div>
 
   <script>
-    const KEY = "sofyan_bet_live_client_v1";
+    const KEY = "sofyan_bet_unified_v1";
     const defaultData = {
       serverUrl: "http://localhost:4000",
-      user: { loggedIn: false, remember: true, username: "" },
+      token: "",
+      user: { loggedIn: false, username: "", role: "user", wallet_mode: "demo" },
+      demo_balance: 10000000,
+      real_balance: 0,
       balance: 10000000,
-      rounds: [
-        { id: 1000, mult: 2.15, hash: "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4", time: "20:10" }
-      ],
-      chat: [
-        { user: "saman_vip", text: "در انتظار اتصال به سرور زنده صوفیان بت..." }
-      ],
+      rounds: [],
+      chat: [],
       bets: [],
-      tickets: []
+      tickets: [],
+      deposits: [],
+      withdrawals: [],
+      financeStats: null,
+      users: []
     };
 
     function loadData() {
       try {
-        const raw = localStorage.getItem(KEY) || sessionStorage.getItem(KEY);
+        const raw = localStorage.getItem(KEY);
         if (!raw) return JSON.parse(JSON.stringify(defaultData));
         return Object.assign(JSON.parse(JSON.stringify(defaultData)), JSON.parse(raw));
       } catch {
@@ -541,54 +477,67 @@
     }
 
     let appData = loadData();
-    let serverOnline = false;
     let wsClient = null;
+    let rState = "waiting";
+    let cMult = 1.0;
+    let slotState = { 1: { status: "none", amount: 0 }, 2: { status: "none", amount: 0 } };
+
+    function isAdmin() {
+      return Boolean(appData.token && appData.user && appData.user.role === "admin");
+    }
+
+    function currentMode() {
+      return appData.user?.wallet_mode === "real" ? "real" : "demo";
+    }
 
     function saveData() {
-      const str = JSON.stringify(appData);
-      if (appData.user.remember) {
-        localStorage.setItem(KEY, str);
-        sessionStorage.removeItem(KEY);
-      } else {
-        sessionStorage.setItem(KEY, str);
-        localStorage.removeItem(KEY);
-      }
+      localStorage.setItem(KEY, JSON.stringify(appData));
     }
 
     function fmt(n) { return Number(n || 0).toLocaleString("fa-IR") + " تومان"; }
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
 
     function toast(msg) {
       const el = document.createElement("div");
       el.className = "toast";
       el.textContent = msg;
       document.getElementById("toastWrap").appendChild(el);
-      setTimeout(() => el.remove(), 2800);
+      setTimeout(() => el.remove(), 3200);
     }
 
     function showTab(name, btnEl) {
+      if ((name === "users" || name === "finance") && !isAdmin()) {
+        toast("این بخش فقط برای ادمین مجاز است.");
+        return;
+      }
       document.querySelectorAll(".section").forEach((s) => s.classList.remove("active"));
       document.getElementById("tab-" + name).classList.add("active");
       document.querySelectorAll(".nav-btn").forEach((b) => b.classList.remove("active"));
       if (btnEl) btnEl.classList.add("active");
+      if (name === "deposit") {
+        syncDepositsFromServer();
+        syncWithdrawalsFromServer();
+      }
       if (name === "support") syncTicketsFromServer();
-    }
-
-    function goTab(name) {
-      const map = { home: 0, crash: 1, mines: 2, dice: 3, roulette: 4, plinko: 5, support: 6, history: 7 };
-      showTab(name, document.querySelectorAll(".nav-btn")[map[name] ?? 0]);
+      if (name === "history") syncMeFromServer();
+      if (name === "finance") syncFinanceStatsFromServer();
+      if (name === "users") syncUsersFromServer();
     }
 
     function setServerBadge(online) {
-      serverOnline = online;
       const b = document.getElementById("serverBadge");
       b.className = online ? "srv-pill online" : "srv-pill";
-      b.textContent = online ? "سرور: متصل (LIVE)" : "سرور: شبیه‌ساز داخلی";
+      b.textContent = online ? "سرور: متصل" : "سرور: قطع";
     }
 
-    function getApiBase() {
-      return (appData.serverUrl || "http://localhost:4000").replace(/\/+$/, "");
-    }
-
+    function getApiBase() { return (appData.serverUrl || "http://localhost:4000").replace(/\/+$/, ""); }
     function getWsUrl() {
       const base = getApiBase();
       if (base.startsWith("https://")) return base.replace("https://", "wss://");
@@ -596,13 +545,31 @@
       return "ws://localhost:4000";
     }
 
-    async function apiPost(path, body) {
-      const res = await fetch(getApiBase() + path, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
-      });
+    async function apiRequest(path, method = "GET", body = null) {
+      const headers = { "Content-Type": "application/json" };
+      if (appData.token) headers["Authorization"] = "Bearer " + appData.token;
+      const opts = { method, headers };
+      if (body) opts.body = JSON.stringify(body);
+      const res = await fetch(getApiBase() + path, opts);
       return res.json();
+    }
+
+    function applyUserBalances(u) {
+      if (!u) return;
+      appData.user.username = u.username || appData.user.username;
+      appData.user.role = u.role || appData.user.role || "user";
+      appData.user.wallet_mode = u.wallet_mode === "real" ? "real" : "demo";
+      if (typeof u.demo_balance === "number") appData.demo_balance = u.demo_balance;
+      if (typeof u.real_balance === "number") appData.real_balance = u.real_balance;
+      appData.balance = appData.user.wallet_mode === "real" ? appData.real_balance : appData.demo_balance;
+      saveData();
+      refreshUI();
+    }
+
+    function authenticateSocket() {
+      if (wsClient && wsClient.readyState === 1 && appData.token) {
+        wsClient.send(JSON.stringify({ type: "auth", token: appData.token }));
+      }
     }
 
     function connectRealtime() {
@@ -610,7 +577,10 @@
       fetch(getApiBase() + "/health")
         .then((r) => r.json())
         .then((d) => {
-          if (d && d.ok) setServerBadge(true);
+          if (d && d.ok) {
+            setServerBadge(true);
+            if (d.cardNumber) document.getElementById("targetCardNum").textContent = d.cardNumber;
+          }
         })
         .catch(() => setServerBadge(false));
 
@@ -619,16 +589,21 @@
         wsClient = ws;
         ws.onopen = () => {
           setServerBadge(true);
+          authenticateSocket();
           syncTicketsFromServer();
+          if (appData.token) {
+            syncMeFromServer();
+            syncDepositsFromServer();
+            syncWithdrawalsFromServer();
+            if (isAdmin()) {
+              syncUsersFromServer();
+              syncFinanceStatsFromServer();
+            }
+          }
         };
-        ws.onclose = () => {
-          setServerBadge(false);
-        };
+        ws.onclose = () => setServerBadge(false);
         ws.onmessage = (ev) => {
-          try {
-            const msg = JSON.parse(ev.data);
-            handleServerWsEvent(msg);
-          } catch {}
+          try { handleServerEvent(JSON.parse(ev.data)); } catch {}
         };
       } catch {
         setServerBadge(false);
@@ -639,61 +614,128 @@
       appData.serverUrl = document.getElementById("serverUrlInput").value.trim() || "http://localhost:4000";
       saveData();
       connectRealtime();
-      toast("در حال اتصال به " + appData.serverUrl + " ...");
+      toast("اتصال مجدد به " + appData.serverUrl);
     }
 
-    /* Crash state driven by Server WS when online, or local fallback when offline */
-    let rState = "waiting", cMult = 1.0, tCrash = 2.15, curHash = "";
-    let slots = { 1: { q: 0, a: 0, cash: false }, 2: { q: 0, a: 0, cash: false } };
+    async function setWalletMode(mode) {
+      if (mode !== "demo" && mode !== "real") return;
+      if (!appData.token) {
+        appData.user.wallet_mode = mode;
+        appData.balance = mode === "real" ? appData.real_balance : appData.demo_balance;
+        saveData();
+        refreshUI();
+        return;
+      }
+      try {
+        const res = await apiRequest("/wallet/mode", "POST", { mode });
+        if (res && res.ok && res.user) {
+          applyUserBalances(res.user);
+          toast(mode === "real" ? "حالت بازی به حساب واقعی تغییر کرد." : "حالت بازی به حساب دمو تغییر کرد.");
+        }
+      } catch {
+        toast("خطا در تغییر حالت کیف پول");
+      }
+    }
 
-    function handleServerWsEvent(msg) {
+    async function topupDemo() {
+      if (!appData.token) {
+        toast("ابتدا وارد حساب کاربری شوید.");
+        openAuth();
+        return;
+      }
+      try {
+        const res = await apiRequest("/wallet/demo-topup", "POST", { amount: 5000000 });
+        if (res && res.ok && res.user) {
+          applyUserBalances(res.user);
+          toast("۵,۰۰۰,۰۰۰ تومان به موجودی دمو اضافه شد.");
+        }
+      } catch {
+        toast("خطا در شارژ دمو");
+      }
+    }
+
+    function handleServerEvent(msg) {
       if (!msg || !msg.type) return;
-      if (msg.type === "init_state" && msg.data) {
-        if (Array.isArray(msg.data.chat)) {
-          appData.chat = msg.data.chat;
-          renderChat();
-        }
-        if (msg.data.crash && Array.isArray(msg.data.crash.history) && msg.data.crash.history.length) {
-          appData.rounds = msg.data.crash.history;
-          renderRounds();
-        }
+      if (msg.type === "auth_ok" && msg.data) {
+        applyUserBalances(msg.data);
+      } else if (msg.type === "init_state" && msg.data) {
+        if (Array.isArray(msg.data.chat)) { appData.chat = msg.data.chat; renderChat(); }
+        if (msg.data.crash && Array.isArray(msg.data.crash.history)) { appData.rounds = msg.data.crash.history; renderRounds(); }
       } else if (msg.type === "crash_start" && msg.data) {
-        rState = "running";
-        cMult = 1.0;
-        curHash = msg.data.roundHash || "";
-        [1, 2].forEach((id) => { slots[id].cash = false; slots[id].a = slots[id].q; slots[id].q = 0; });
+        rState = "running"; cMult = 1.0;
+        [1, 2].forEach((id) => {
+          if (slotState[id].status === "queued") slotState[id].status = "active";
+          else if (slotState[id].status !== "active") slotState[id] = { status: "none", amount: 0 };
+        });
         document.getElementById("crashMultText").className = "crash-mult mono";
         document.getElementById("crashMultText").textContent = "1.00x";
-        document.getElementById("crashStatusText").textContent = "راند #" + msg.data.roundId + " در حال پرواز (سرور)";
-        updateCrashBtns();
+        document.getElementById("crashStatusText").textContent = "راند #" + msg.data.roundId + " در حال پرواز";
+        updateSlotUI();
       } else if (msg.type === "crash_tick" && msg.data) {
-        rState = "running";
-        cMult = Number(msg.data.multiplier) || 1.0;
+        rState = "running"; cMult = Number(msg.data.multiplier) || 1.0;
         document.getElementById("crashMultText").textContent = cMult.toFixed(2) + "x";
-        updateCrashBtns();
-        [1, 2].forEach((id) => {
-          const av = Number(document.getElementById("autoCash" + id).value);
-          if (slots[id].a > 0 && !slots[id].cash && av >= 1.1 && cMult >= av) cashCrash(id);
-        });
+        updateSlotUI();
+      } else if (msg.type === "crash_bet_placed" && msg.data) {
+        const d = msg.data;
+        if (d.username === appData.user.username) {
+          slotState[d.slotId] = { status: d.status, amount: d.amount };
+          applyUserBalances(d);
+          updateSlotUI();
+          toast(`شرط (${d.mode === "real" ? "واقعی" : "دمو"}) ثبت شد.`);
+        }
+      } else if (msg.type === "crash_cashout_ok" && msg.data) {
+        const d = msg.data;
+        if (d.username === appData.user.username) {
+          slotState[d.slotId].status = "cashed";
+          applyUserBalances(d);
+          if (d.betLog) {
+            appData.bets.unshift({
+              id: d.betLog.id,
+              mode: d.betLog.mode || d.mode || "demo",
+              game: d.betLog.game,
+              stake: fmt(d.betLog.stake),
+              mult: Number(d.betLog.mult).toFixed(2) + "x",
+              result: "+" + fmt(d.betLog.payout)
+            });
+            appData.bets = appData.bets.slice(0, 50);
+          }
+          saveData(); refreshUI(); updateSlotUI();
+          document.getElementById("crashMultText").className = "crash-mult mono won";
+          toast(`برداشت در ضریب ${Number(d.multiplier).toFixed(2)}x واریز شد.`);
+        }
       } else if (msg.type === "crash_end" && msg.data) {
         rState = "crashed";
         const fin = msg.data;
         appData.rounds.unshift(fin);
         appData.rounds = appData.rounds.slice(0, 15);
         [1, 2].forEach((id) => {
-          if (slots[id].a > 0 && !slots[id].cash) addBetLog("انفجار پنل " + id, slots[id].a, 0, 0);
-          slots[id].a = 0;
+          if (slotState[id].status === "active") {
+            appData.bets.unshift({
+              id: "B" + Math.floor(10000 + Math.random() * 90000),
+              mode: currentMode(),
+              game: `انفجار پنل ${id}`,
+              stake: fmt(slotState[id].amount),
+              mult: "0.00x",
+              result: "باخت"
+            });
+            slotState[id] = { status: "lost", amount: 0 };
+          }
         });
-        saveData();
-        refreshUI();
+        saveData(); refreshUI();
         const el = document.getElementById("crashMultText");
         el.textContent = Number(fin.mult).toFixed(2) + "x";
         el.className = "crash-mult mono crashed";
         document.getElementById("crashStatusText").textContent = "منفجر شد! راند بعدی تا چند لحظه دیگر...";
-        updateCrashBtns();
+        updateSlotUI();
       } else if (msg.type === "crash_waiting" && msg.data) {
         rState = "waiting";
+        [1, 2].forEach((id) => {
+          if (slotState[id].status !== "queued") slotState[id] = { status: "none", amount: 0 };
+        });
         document.getElementById("crashStatusText").textContent = "در انتظار شروع راند #" + msg.data.roundId + "...";
+        updateSlotUI();
+      } else if (msg.type === "crash_error" && msg.data) {
+        toast(msg.data.message || "خطا از سمت سرور");
       } else if (msg.type === "chat_msg" && msg.data) {
         appData.chat.push(msg.data);
         appData.chat = appData.chat.slice(-50);
@@ -701,103 +743,43 @@
       }
     }
 
-    /* Local fallback timer when server is offline */
-    setInterval(() => {
-      if (serverOnline) return;
-      if (rState === "waiting") {
-        rState = "running"; cMult = 1.0;
-        tCrash = Number((1.15 + Math.random() * 4.2).toFixed(2));
-        [1, 2].forEach((id) => { slots[id].cash = false; slots[id].a = slots[id].q; slots[id].q = 0; });
-        document.getElementById("crashMultText").className = "crash-mult mono";
-        document.getElementById("crashStatusText").textContent = "در حال پرواز (حالت داخلی)";
-        updateCrashBtns();
-      } else if (rState === "running") {
-        cMult = Number((cMult + 0.03).toFixed(2));
-        document.getElementById("crashMultText").textContent = cMult.toFixed(2) + "x";
-        updateCrashBtns();
-        [1, 2].forEach((id) => {
-          const av = Number(document.getElementById("autoCash" + id).value);
-          if (slots[id].a > 0 && !slots[id].cash && av >= 1.1 && cMult >= av) cashCrash(id);
-        });
-        if (cMult >= tCrash) {
-          rState = "crashed";
-          const nextId = (appData.rounds[0]?.id || 1000) + 1;
-          appData.rounds.unshift({
-            id: nextId, mult: tCrash,
-            hash: Array.from({ length: 64 }, () => "0123456789abcdef"[Math.floor(Math.random() * 16)]).join(""),
-            time: new Date().toLocaleTimeString("fa-IR", { hour: "2-digit", minute: "2-digit" })
-          });
-          appData.rounds = appData.rounds.slice(0, 15);
-          [1, 2].forEach((id) => {
-            if (slots[id].a > 0 && !slots[id].cash) addBetLog("انفجار پنل " + id, slots[id].a, 0, 0);
-            slots[id].a = 0;
-          });
-          saveData(); refreshUI();
-          const el = document.getElementById("crashMultText");
-          el.textContent = tCrash.toFixed(2) + "x";
-          el.className = "crash-mult mono crashed";
-          document.getElementById("crashStatusText").textContent = "منفجر شد!";
-          updateCrashBtns();
-          setTimeout(() => { if (!serverOnline) rState = "waiting"; }, 2200);
-        }
+    function handleSlot(slotId) {
+      if (!appData.token) {
+        toast("ابتدا وارد حساب کاربری شوید.");
+        openAuth();
+        return;
       }
-    }, 100);
-
-    function spendBalance(amt) {
-      const n = Number(amt);
-      if (!(n > 0)) { toast("مبلغ معتبر وارد کنید."); return false; }
-      if (appData.balance < n) { toast("موجودی کافی نیست."); return false; }
-      appData.balance -= n;
-      saveData(); refreshUI();
-      return true;
-    }
-
-    function addBetLog(game, stake, mult, winAmt) {
-      appData.bets.unshift({
-        id: "B" + Math.floor(10000 + Math.random() * 90000),
-        game, stake: fmt(stake),
-        mult: mult > 0 ? mult.toFixed(2) + "x" : "0.00x",
-        result: winAmt > 0 ? "+" + fmt(winAmt) : "باخت"
-      });
-      appData.bets = appData.bets.slice(0, 50);
-      if (winAmt > 0) appData.balance += winAmt;
-      saveData(); refreshUI();
-      if (serverOnline) {
-        apiPost("/bets/record", {
-          username: appData.user.username || "guest_sofyan",
-          game, stake, mult, payout: winAmt
-        }).catch(() => {});
+      if (!wsClient || wsClient.readyState !== 1) {
+        toast("اتصال WebSocket به سرور برقرار نیست.");
+        return;
       }
+      const s = slotState[slotId];
+      if (rState === "running" && s.status === "active") {
+        wsClient.send(JSON.stringify({ type: "crash_cashout", slotId }));
+        return;
+      }
+      wsClient.send(JSON.stringify({
+        type: "crash_place_bet",
+        slotId,
+        amount: Number(document.getElementById("betAmt" + slotId).value),
+        autoCashout: Number(document.getElementById("autoCash" + slotId).value)
+      }));
     }
 
-    function cashCrash(id) {
-      const s = slots[id];
-      if (rState !== "running" || s.a <= 0 || s.cash) return;
-      s.cash = true;
-      addBetLog("انفجار پنل " + id, s.a, cMult, Math.round(s.a * cMult));
-      document.getElementById("crashMultText").className = "crash-mult mono won";
-      toast("برداشت پنل " + id + " در " + cMult.toFixed(2) + "x!");
-      updateCrashBtns();
-    }
-
-    function handleSlot(id) {
-      const s = slots[id];
-      if (rState === "running" && s.a > 0 && !s.cash) { cashCrash(id); return; }
-      if (s.q > 0) { appData.balance += s.q; s.q = 0; saveData(); refreshUI(); toast("شرط پنل " + id + " لغو شد."); updateCrashBtns(); return; }
-      const amt = Number(document.getElementById("betAmt" + id).value);
-      if (!spendBalance(amt)) return;
-      s.q = amt;
-      toast("شرط پنل " + id + " ثبت شد.");
-      updateCrashBtns();
-    }
-
-    function updateCrashBtns() {
+    function updateSlotUI() {
       [1, 2].forEach((id) => {
         const btn = document.getElementById("btnSlot" + id);
-        const s = slots[id];
-        if (rState === "running" && s.a > 0 && !s.cash) { btn.className = "btn btn-green"; btn.textContent = "برداشت (" + cMult.toFixed(2) + "x)"; }
-        else if (s.q > 0) { btn.className = "btn btn-red"; btn.textContent = "لغو شرط پنل " + id; }
-        else { btn.className = "btn btn-gold"; btn.textContent = "ثبت شرط پنل " + id; }
+        const s = slotState[id];
+        if (rState === "running" && s.status === "active") {
+          btn.disabled = false; btn.className = "btn btn-green";
+          btn.textContent = `برداشت آنی (${cMult.toFixed(2)}x)`;
+        } else if (s.status === "queued" || s.status === "active") {
+          btn.disabled = true; btn.className = "btn btn-gray";
+          btn.textContent = s.status === "queued" ? "ثبت‌شده برای راند بعد" : "در حال پرواز...";
+        } else {
+          btn.disabled = false; btn.className = "btn btn-gold";
+          btn.textContent = `ثبت شرط پنل ${id}`;
+        }
       });
     }
 
@@ -828,7 +810,7 @@
 
     function renderChat() {
       const box = document.getElementById("chatList");
-      box.innerHTML = appData.chat.map((m) => `<div class="chat-msg"><strong>${m.user}</strong><span>${m.text}</span></div>`).join("");
+      box.innerHTML = appData.chat.map((m) => `<div class="chat-msg"><strong>${escapeHtml(m.user)}</strong><span>${escapeHtml(m.text)}</span></div>`).join("");
       box.scrollTop = box.scrollHeight;
     }
 
@@ -837,167 +819,397 @@
       const inp = document.getElementById("chatInput");
       const txt = inp.value.trim();
       if (!txt) return;
-      const sender = appData.user.loggedIn && appData.user.username ? appData.user.username : "مهمان";
       inp.value = "";
       if (wsClient && wsClient.readyState === 1) {
-        wsClient.send(JSON.stringify({ type: "chat_send", user: sender, text: txt }));
+        wsClient.send(JSON.stringify({ type: "chat_send", text: txt }));
       } else {
-        appData.chat.push({ user: sender, text: txt });
-        appData.chat = appData.chat.slice(-50);
-        saveData();
-        renderChat();
+        toast("اتصال سرور برقرار نیست.");
       }
     }
 
-    /* Mines, Dice, Roulette, Plinko */
-    let mState = { active: false, bet: 0, count: 3, bombs: new Set(), open: new Set(), mult: 1 };
-    function renderMines() {
-      const grid = document.getElementById("minesGrid");
-      grid.innerHTML = "";
-      for (let i = 0; i < 25; i++) {
-        const b = document.createElement("button");
-        b.className = "mine-cell";
-        if (!mState.active && mState.bombs.size > 0) {
-          if (mState.bombs.has(i)) { b.classList.add("bomb"); b.textContent = "💣"; }
-          else if (mState.open.has(i)) { b.classList.add("gem"); b.textContent = "💎"; }
-          else { b.textContent = "✦"; b.style.opacity = "0.45"; }
-          b.disabled = true;
-        } else if (mState.open.has(i)) {
-          b.classList.add("gem"); b.textContent = "💎"; b.disabled = true;
-        } else {
-          b.textContent = "?"; b.disabled = !mState.active;
-          b.onclick = () => clickMine(i);
-        }
-        grid.appendChild(b);
+    async function submitDepositReceipt(e) {
+      e.preventDefault();
+      if (!appData.token) {
+        toast("ابتدا وارد حساب کاربری شوید.");
+        openAuth();
+        return;
       }
-      document.getElementById("minesMultTxt").textContent = mState.mult.toFixed(2) + "x";
-    }
-    function startMines() {
-      const bet = Number(document.getElementById("minesBet").value);
-      const count = Number(document.getElementById("minesCount").value);
-      if (!spendBalance(bet)) return;
-      const bombs = new Set();
-      while (bombs.size < count) bombs.add(Math.floor(Math.random() * 25));
-      mState = { active: true, bet, count, bombs, open: new Set(), mult: 1 };
-      document.getElementById("minesStartBtn").disabled = true;
-      document.getElementById("minesCashBtn").disabled = true;
-      renderMines();
-    }
-    function clickMine(i) {
-      if (!mState.active || mState.open.has(i)) return;
-      if (mState.bombs.has(i)) {
-        mState.open.add(i); mState.active = false;
-        addBetLog("بازی مین", mState.bet, 0, 0);
-        document.getElementById("minesStartBtn").disabled = false;
-        document.getElementById("minesCashBtn").disabled = true;
-        renderMines(); return;
-      }
-      mState.open.add(i);
-      let prob = 1;
-      for (let k = 0; k < mState.open.size; k++) prob *= (25 - mState.count - k) / (25 - k);
-      mState.mult = Number(Math.max(1.05, 0.97 / prob).toFixed(2));
-      document.getElementById("minesCashBtn").disabled = false;
-      renderMines();
-    }
-    function cashoutMines() {
-      if (!mState.active || mState.open.size === 0) return;
-      const win = Math.round(mState.bet * mState.mult);
-      mState.active = false;
-      addBetLog("بازی مین", mState.bet, mState.mult, win);
-      document.getElementById("minesStartBtn").disabled = false;
-      document.getElementById("minesCashBtn").disabled = true;
-      toast("برداشت مین: +" + fmt(win));
-      renderMines();
-    }
-    renderMines();
+      const amount = Number(document.getElementById("depAmountInput").value);
+      const receiptRef = document.getElementById("depRefInput").value.trim();
+      const note = document.getElementById("depNoteInput").value.trim();
 
-    function updateDiceInfo() {
-      const t = Number(document.getElementById("diceTarget").value);
-      document.getElementById("diceTargetVal").textContent = t;
-      document.getElementById("diceMultVal").textContent = Number((99 / Math.max(1, t - 1)).toFixed(2)).toFixed(2) + "x";
-    }
-    function playDice() {
-      const bet = Number(document.getElementById("diceBet").value);
-      if (!spendBalance(bet)) return;
-      const t = Number(document.getElementById("diceTarget").value);
-      const m = Number((99 / Math.max(1, t - 1)).toFixed(2));
-      const roll = Number((Math.random() * 100).toFixed(2));
-      const won = roll < t;
-      const win = won ? Math.round(bet * m) : 0;
-      document.getElementById("diceOutNum").textContent = roll.toFixed(2);
-      document.getElementById("diceOutNum").style.color = won ? "#34d399" : "#f87171";
-      document.getElementById("diceOutMsg").textContent = won ? "بردید! +" + fmt(win) : "باختید!";
-      addBetLog("تاس", bet, won ? m : 0, win);
-    }
-    updateDiceInfo();
-
-    const REDS = new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
-    let rPick = "red";
-    function pickRoulette(p) {
-      rPick = p;
-      document.querySelectorAll(".r-opt").forEach((b) => b.classList.toggle("active", b.dataset.pick === p));
-    }
-    function spinRoulette() {
-      const bet = Number(document.getElementById("rouletteBet").value);
-      if (!spendBalance(bet)) return;
-      const num = Math.floor(Math.random() * 37);
-      const isG = num === 0, isR = !isG && REDS.has(num), isB = !isG && !isR;
-      let won = false, mult = 2;
-      if (rPick === "green" && isG) { won = true; mult = 35; }
-      else if (rPick === "red" && isR) won = true;
-      else if (rPick === "black" && isB) won = true;
-      else if (rPick === "even" && !isG && num % 2 === 0) won = true;
-      else if (rPick === "odd" && !isG && num % 2 === 1) won = true;
-      else if (rPick === "low" && num >= 1 && num <= 18) won = true;
-      const win = won ? Math.round(bet * mult) : 0;
-      document.getElementById("rouletteOut").textContent = num;
-      document.getElementById("rouletteMsg").textContent = won ? "بردید! +" + fmt(win) : "عدد " + num;
-      addBetLog("رولت", bet, won ? mult : 0, win);
-    }
-
-    const P_MAP = {
-      low: [1.5, 1.2, 1.1, 1.0, 1.1, 1.2, 1.5],
-      medium: [3.0, 1.8, 1.2, 0.7, 1.2, 1.8, 3.0],
-      high: [9.0, 3.0, 1.4, 0.4, 1.4, 3.0, 9.0]
-    };
-    function drawPlinkoSlots() {
-      const arr = P_MAP[document.getElementById("plinkoRisk").value];
-      document.getElementById("plinkoSlots").innerHTML = arr.map((m, i) => `<div class="p-slot mono" id="pslot-${i}">${m.toFixed(1)}x</div>`).join("");
-    }
-    function dropPlinko() {
-      const bet = Number(document.getElementById("plinkoBet").value);
-      if (!spendBalance(bet)) return;
-      const arr = P_MAP[document.getElementById("plinkoRisk").value];
-      let rCount = 0; const dirs = [];
-      for (let i = 0; i < 6; i++) { const goR = Math.random() >= 0.5; if (goR) rCount++; dirs.push(goR ? "R" : "L"); }
-      const idx = Math.min(arr.length - 1, rCount);
-      const mult = arr[idx];
-      document.querySelectorAll(".p-slot").forEach((s) => s.classList.remove("hit"));
-      document.getElementById("plinkoPath").textContent = dirs.join(" • ");
-      document.getElementById("plinkoMult").textContent = mult.toFixed(1) + "x";
-      document.getElementById("pslot-" + idx).classList.add("hit");
-      addBetLog("پلینکو", bet, mult, Math.round(bet * mult));
-    }
-    drawPlinkoSlots();
-
-    /* Tickets (Server + Local) */
-    async function syncTicketsFromServer() {
-      if (!serverOnline) return;
       try {
-        const res = await fetch(getApiBase() + "/tickets");
-        const data = await res.json();
-        if (data && data.ok && Array.isArray(data.tickets)) {
-          appData.tickets = data.tickets;
-          saveData();
-          renderTickets();
+        const res = await apiRequest("/deposits/submit", "POST", { amount, receiptRef, note });
+        if (res && res.ok && res.deposit) {
+          document.getElementById("depRefInput").value = "";
+          document.getElementById("depNoteInput").value = "";
+          appData.deposits.unshift(res.deposit);
+          saveData(); renderDeposits();
+          if (isAdmin()) syncFinanceStatsFromServer();
+          toast("فیش واریزی ارسال شد و در انتظار بررسی ادمین است.");
+          return;
+        }
+        toast(res?.message || "خطا در ارسال فیش");
+      } catch {
+        toast("خطا در ارتباط با سرور");
+      }
+    }
+
+    async function submitWithdrawalRequest(e) {
+      e.preventDefault();
+      if (!appData.token) {
+        toast("ابتدا وارد حساب کاربری شوید.");
+        openAuth();
+        return;
+      }
+      const amount = Number(document.getElementById("wdrAmountInput").value);
+      const destCard = document.getElementById("wdrCardInput").value.trim();
+      const holderName = document.getElementById("wdrHolderInput").value.trim();
+
+      try {
+        const res = await apiRequest("/withdrawals/request", "POST", { amount, destCard, holderName });
+        if (res && res.ok && res.withdrawal) {
+          if (res.user) applyUserBalances(res.user);
+          appData.withdrawals.unshift(res.withdrawal);
+          saveData(); renderWithdrawals();
+          if (isAdmin()) syncFinanceStatsFromServer();
+          toast("درخواست برداشت واقعی ثبت شد و در انتظار بررسی ادمین است.");
+          return;
+        }
+        toast(res?.message || "خطا در ثبت درخواست برداشت");
+      } catch {
+        toast("خطا در ارتباط با سرور");
+      }
+    }
+
+    async function syncDepositsFromServer() {
+      if (!appData.token) return;
+      try {
+        const res = await apiRequest("/deposits");
+        if (res && res.ok && Array.isArray(res.deposits)) {
+          appData.deposits = res.deposits;
+          saveData(); renderDeposits();
         }
       } catch {}
     }
 
+    async function syncWithdrawalsFromServer() {
+      if (!appData.token) return;
+      try {
+        const res = await apiRequest("/withdrawals");
+        if (res && res.ok && Array.isArray(res.withdrawals)) {
+          appData.withdrawals = res.withdrawals;
+          saveData(); renderWithdrawals();
+        }
+      } catch {}
+    }
+
+    async function syncFinanceStatsFromServer() {
+      if (!isAdmin()) return;
+      try {
+        const res = await apiRequest("/admin/finance-stats");
+        if (res && res.ok && res.stats) {
+          appData.financeStats = res.stats;
+          saveData(); renderFinanceStats();
+        }
+      } catch {}
+    }
+
+    function renderFinanceStats() {
+      const grid = document.getElementById("financeCardsGrid");
+      const depBody = document.getElementById("recentDepositsStatsBody");
+      const wdrBody = document.getElementById("recentWithdrawalsStatsBody");
+      if (!grid) return;
+
+      const s = appData.financeStats;
+      if (!s) {
+        grid.innerHTML = `<div style="color:#94a3b8;font-size:0.85rem;">در حال بارگذاری آمار مالی...</div>`;
+        return;
+      }
+
+      grid.innerHTML = `
+        <div class="stat-card">
+          <div class="stat-label">جمع واریزهای تاییدشده</div>
+          <div class="stat-val green">${fmt(s.approvedDepositsTotal)}</div>
+          <div class="stat-sub">${s.approvedDepositsCount} فیش تایید • ${s.pendingDepositsCount} در انتظار</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">جمع برداشت‌های تاییدشده</div>
+          <div class="stat-val red">${fmt(s.approvedWithdrawalsTotal)}</div>
+          <div class="stat-sub">${s.approvedWithdrawalsCount} تایید • ${s.pendingWithdrawalsCount} در انتظار (${fmt(s.pendingWithdrawalsTotal)})</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">جریان نقدی خالص (واریز - برداشت)</div>
+          <div class="stat-val ${s.netCashflow >= 0 ? "green" : "red"}">${fmt(s.netCashflow)}</div>
+          <div class="stat-sub">تفاضل تراکنش‌های نهایی‌شده</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">موجودی واقعی کل کاربران</div>
+          <div class="stat-val">${fmt(s.totalRealBalances)}</div>
+          <div class="stat-sub">تعداد کاربران: ${s.totalUsers}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">سود/زیان خالص تخمینی صندوق</div>
+          <div class="stat-val ${s.netHousePosition >= 0 ? "green" : "red"}">${fmt(s.netHousePosition)}</div>
+          <div class="stat-sub">جریان نقدی خالص منهای موجودی واقعی کاربران</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">سود/زیان خالص بازی واقعی</div>
+          <div class="stat-val ${s.realGameGrossMargin >= 0 ? "green" : "red"}">${fmt(s.realGameGrossMargin)}</div>
+          <div class="stat-sub">تعداد شرط واقعی: ${s.realBetsCount}</div>
+        </div>
+      `;
+
+      const recentDeps = Array.isArray(s.recentDeposits) ? s.recentDeposits : [];
+      depBody.innerHTML = recentDeps.length
+        ? recentDeps.map((d) => `
+          <tr>
+            <td class="mono">${escapeHtml(d.id)}</td>
+            <td>${escapeHtml(d.username)}</td>
+            <td>${fmt(d.amount)}</td>
+            <td>${statusBadge(d.status)}</td>
+          </tr>
+        `).join("")
+        : `<tr><td colspan="4" style="text-align:center;color:#94a3b8;">واریزی ثبت نشده است.</td></tr>`;
+
+      const recentWdrs = Array.isArray(s.recentWithdrawals) ? s.recentWithdrawals : [];
+      wdrBody.innerHTML = recentWdrs.length
+        ? recentWdrs.map((w) => `
+          <tr>
+            <td class="mono">${escapeHtml(w.id)}</td>
+            <td>${escapeHtml(w.username)}</td>
+            <td>${fmt(w.amount)}</td>
+            <td>${statusBadge(w.status)}</td>
+          </tr>
+        `).join("")
+        : `<tr><td colspan="4" style="text-align:center;color:#94a3b8;">برداشتی ثبت نشده است.</td></tr>`;
+    }
+
+    async function reviewDeposit(depId, decision) {
+      if (!isAdmin()) {
+        toast("فقط ادمین مجاز به تایید یا رد فیش است.");
+        return;
+      }
+      const noteEl = document.getElementById("dep-admin-note-" + depId);
+      const adminNote = noteEl ? noteEl.value.trim() : "";
+
+      try {
+        const res = await apiRequest(`/admin/deposits/${encodeURIComponent(depId)}/review`, "PATCH", {
+          decision,
+          adminNote
+        });
+        if (res && res.ok && res.deposit) {
+          appData.deposits = appData.deposits.map((d) => (d.id === depId ? res.deposit : d));
+          if (res.user && res.user.username === appData.user.username) {
+            applyUserBalances(res.user);
+          }
+          saveData(); renderDeposits(); syncFinanceStatsFromServer();
+          toast(decision === "approved" ? `فیش ${depId} تایید و به حساب واقعی واریز شد.` : `فیش ${depId} رد شد.`);
+          return;
+        }
+        toast(res?.message || "خطا در بررسی فیش");
+      } catch {
+        toast("خطا در ارتباط با سرور");
+      }
+    }
+
+    async function reviewWithdrawal(wdrId, decision) {
+      if (!isAdmin()) {
+        toast("فقط ادمین مجاز به تایید یا رد برداشت است.");
+        return;
+      }
+      const noteEl = document.getElementById("wdr-admin-note-" + wdrId);
+      const adminNote = noteEl ? noteEl.value.trim() : "";
+
+      try {
+        const res = await apiRequest(`/admin/withdrawals/${encodeURIComponent(wdrId)}/review`, "PATCH", {
+          decision,
+          adminNote
+        });
+        if (res && res.ok && res.withdrawal) {
+          appData.withdrawals = appData.withdrawals.map((w) => (w.id === wdrId ? res.withdrawal : w));
+          if (res.user && res.user.username === appData.user.username) {
+            applyUserBalances(res.user);
+          }
+          saveData(); renderWithdrawals(); syncFinanceStatsFromServer();
+          toast(decision === "approved" ? `برداشت ${wdrId} تایید شد.` : `برداشت ${wdrId} رد و مبلغ به حساب واقعی برگشت داده شد.`);
+          return;
+        }
+        toast(res?.message || "خطا در بررسی برداشت");
+      } catch {
+        toast("خطا در ارتباط با سرور");
+      }
+    }
+
+    function statusBadge(status) {
+      if (status === "approved") return `<span class="badge-status st-approved">تایید شده</span>`;
+      if (status === "rejected") return `<span class="badge-status st-rejected">رد شده</span>`;
+      return `<span class="badge-status st-pending">در انتظار بررسی</span>`;
+    }
+
+    function renderDeposits() {
+      const wrap = document.getElementById("depositsList");
+      if (!appData.deposits.length) {
+        wrap.innerHTML = `<div style="color:#94a3b8;font-size:0.85rem;">هنوز فیش واریزی ثبت نشده است.</div>`;
+        return;
+      }
+      const adminActive = isAdmin();
+      wrap.innerHTML = appData.deposits.map((d) => `
+        <div class="dep-item">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+            <div>
+              <span class="mono" style="color:#94a3b8;font-size:0.76rem;">#${escapeHtml(d.id)}</span>
+              <strong style="margin-right:6px;">${fmt(d.amount)}</strong>
+              <span style="color:#94a3b8;font-size:0.76rem;">(${escapeHtml(d.username)})</span>
+            </div>
+            ${statusBadge(d.status)}
+          </div>
+          <div style="font-size:0.8rem;color:#cbd5e1;">
+            شماره پیگیری / فیش: <span class="mono" style="color:#fbbf24;">${escapeHtml(d.receipt_ref)}</span> • زمان: ${escapeHtml(d.created_at || "")}
+          </div>
+          ${d.note ? `<div style="font-size:0.78rem;color:#94a3b8;margin-top:4px;">توضیح کاربر: ${escapeHtml(d.note)}</div>` : ""}
+          ${d.admin_note ? `<div class="ticket-reply"><strong>یادداشت ادمین:</strong> ${escapeHtml(d.admin_note)}</div>` : ""}
+          ${adminActive && d.status === "pending" ? `
+            <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px;">
+              <input type="text" id="dep-admin-note-${escapeHtml(d.id)}" placeholder="توضیح تایید یا دلیل رد (اختیاری)" style="padding:7px 10px;font-size:0.8rem;" />
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <button type="button" class="btn btn-green" onclick="reviewDeposit('${escapeHtml(d.id)}', 'approved')">✔ تایید و شارژ واقعی</button>
+                <button type="button" class="btn btn-red" onclick="reviewDeposit('${escapeHtml(d.id)}', 'rejected')">✖ رد فیش</button>
+              </div>
+            </div>
+          ` : ""}
+        </div>
+      `).join("");
+    }
+
+    function renderWithdrawals() {
+      const wrap = document.getElementById("withdrawalsList");
+      if (!appData.withdrawals.length) {
+        wrap.innerHTML = `<div style="color:#94a3b8;font-size:0.85rem;">هنوز درخواست برداشتی ثبت نشده است.</div>`;
+        return;
+      }
+      const adminActive = isAdmin();
+      wrap.innerHTML = appData.withdrawals.map((w) => `
+        <div class="dep-item">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+            <div>
+              <span class="mono" style="color:#94a3b8;font-size:0.76rem;">#${escapeHtml(w.id)}</span>
+              <strong style="margin-right:6px;">${fmt(w.amount)}</strong>
+              <span style="color:#94a3b8;font-size:0.76rem;">(${escapeHtml(w.username)})</span>
+            </div>
+            ${statusBadge(w.status)}
+          </div>
+          <div style="font-size:0.8rem;color:#cbd5e1;">
+            کارت مقصد: <span class="mono" style="color:#38bdf8;">${escapeHtml(w.dest_card)}</span>
+            ${w.holder_name ? ` • به نام: ${escapeHtml(w.holder_name)}` : ""} • زمان: ${escapeHtml(w.created_at || "")}
+          </div>
+          ${w.admin_note ? `<div class="ticket-reply"><strong>یادداشت ادمین:</strong> ${escapeHtml(w.admin_note)}</div>` : ""}
+          ${adminActive && w.status === "pending" ? `
+            <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px;">
+              <input type="text" id="wdr-admin-note-${escapeHtml(w.id)}" placeholder="کد پیگیری واریز یا دلیل رد" style="padding:7px 10px;font-size:0.8rem;" />
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <button type="button" class="btn btn-green" onclick="reviewWithdrawal('${escapeHtml(w.id)}', 'approved')">✔ تایید برداشت</button>
+                <button type="button" class="btn btn-red" onclick="reviewWithdrawal('${escapeHtml(w.id)}', 'rejected')">✖ رد و بازگشت وجه</button>
+              </div>
+            </div>
+          ` : ""}
+        </div>
+      `).join("");
+    }
+
+    async function syncTicketsFromServer() {
+      try {
+        const data = await apiRequest("/tickets");
+        if (data && data.ok && Array.isArray(data.tickets)) {
+          appData.tickets = data.tickets;
+          saveData(); renderTickets();
+        }
+      } catch {}
+    }
+
+    async function syncMeFromServer() {
+      if (!appData.token) return;
+      try {
+        const data = await apiRequest("/auth/me");
+        if (data && data.ok && data.user) {
+          applyUserBalances(data.user);
+          if (Array.isArray(data.bets)) {
+            appData.bets = data.bets.map((b) => ({
+              id: b.id,
+              mode: b.mode || "demo",
+              game: b.game,
+              stake: fmt(b.stake),
+              mult: Number(b.mult).toFixed(2) + "x",
+              result: b.payout > 0 ? "+" + fmt(b.payout) : "باخت"
+            }));
+          }
+          saveData(); renderMyBets();
+        }
+      } catch {}
+    }
+
+    async function syncUsersFromServer() {
+      if (!isAdmin()) return;
+      try {
+        const res = await apiRequest("/admin/users");
+        if (res && res.ok && Array.isArray(res.users)) {
+          appData.users = res.users;
+          saveData(); renderUsersAdmin();
+        }
+      } catch {}
+    }
+
+    async function changeUserRole(userId) {
+      if (!isAdmin()) return;
+      const sel = document.getElementById("role-sel-" + userId);
+      if (!sel) return;
+      try {
+        const res = await apiRequest(`/admin/users/${userId}/role`, "PATCH", { role: sel.value });
+        if (res && res.ok && res.user) {
+          appData.users = appData.users.map((u) => (u.id === userId ? res.user : u));
+          saveData(); renderUsersAdmin();
+          toast(`نقش کاربر ${res.user.username} به ${res.user.role} تغییر یافت.`);
+        }
+      } catch {
+        toast("خطا در تغییر نقش");
+      }
+    }
+
+    function renderUsersAdmin() {
+      const body = document.getElementById("usersAdminBody");
+      if (!body) return;
+      if (!appData.users.length) {
+        body.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#94a3b8;">کاربری یافت نشد.</td></tr>`;
+        return;
+      }
+      body.innerHTML = appData.users.map((u) => `
+        <tr>
+          <td class="mono">#${u.id}</td>
+          <td>${escapeHtml(u.username)}</td>
+          <td>${fmt(u.demo_balance)}</td>
+          <td>${fmt(u.real_balance)}</td>
+          <td class="mono">${escapeHtml(u.role)}</td>
+          <td>
+            <div style="display:flex;gap:6px;align-items:center;">
+              <select id="role-sel-${u.id}" style="width:auto;min-width:95px;padding:5px 8px;font-size:0.78rem;">
+                <option value="user" ${u.role === "user" ? "selected" : ""}>user</option>
+                <option value="admin" ${u.role === "admin" ? "selected" : ""}>admin</option>
+              </select>
+              <button type="button" class="btn btn-gold" onclick="changeUserRole(${u.id})">ثبت</button>
+            </div>
+          </td>
+        </tr>
+      `).join("");
+    }
+
     async function submitTicket(e) {
       e.preventDefault();
+      if (!appData.token) {
+        toast("ابتدا وارد حساب کاربری شوید.");
+        openAuth();
+        return;
+      }
       const payload = {
-        username: appData.user.username || "مهمان",
         topic: document.getElementById("ticketTopic").value,
         priority: document.getElementById("ticketPriority").value,
         subject: document.getElementById("ticketSubject").value.trim(),
@@ -1005,54 +1217,34 @@
       };
       if (!payload.subject || !payload.message) return;
 
-      if (serverOnline) {
-        try {
-          const res = await apiPost("/tickets", payload);
-          if (res && res.ok && res.ticket) {
-            appData.tickets.unshift(res.ticket);
-            document.getElementById("ticketSubject").value = "";
-            document.getElementById("ticketMessage").value = "";
-            saveData();
-            renderTickets();
-            toast("تیکت در سرور ثبت شد.");
-            return;
-          }
-        } catch {}
+      try {
+        const res = await apiRequest("/tickets", "POST", payload);
+        if (res && res.ok && res.ticket) {
+          appData.tickets.unshift(res.ticket);
+          document.getElementById("ticketSubject").value = "";
+          document.getElementById("ticketMessage").value = "";
+          saveData(); renderTickets();
+          toast("تیکت با موفقیت ثبت شد.");
+        }
+      } catch {
+        toast("خطا در ثبت تیکت");
       }
-
-      appData.tickets.unshift({
-        id: "TCK-" + Math.floor(1000 + Math.random() * 9000),
-        ...payload,
-        status: "در انتظار بررسی",
-        reply: "تیکت شما ثبت شد."
-      });
-      document.getElementById("ticketSubject").value = "";
-      document.getElementById("ticketMessage").value = "";
-      saveData();
-      renderTickets();
-      toast("تیکت با موضوع «" + payload.topic + "» ثبت شد.");
     }
 
     function renderTickets() {
       const wrap = document.getElementById("ticketsList");
       if (!appData.tickets.length) {
-        wrap.innerHTML = `<div style="color:#94a3b8;font-size:0.85rem;">هنوز تیکتی ثبت نشده است.</div>`;
+        wrap.innerHTML = `<div style="color:#94a3b8;font-size:0.85rem;">تیکتی ثبت نشده است.</div>`;
         return;
       }
       wrap.innerHTML = appData.tickets.map((t) => `
         <div class="ticket-item">
-          <div class="ticket-head">
-            <div>
-              <span class="mono" style="color:#94a3b8;font-size:0.76rem;">#${t.id}</span>
-              <strong style="margin-right:6px;">${t.subject}</strong>
-            </div>
-            <div style="display:flex;gap:6px;flex-wrap:wrap;">
-              <span class="badge-topic">${t.topic}</span>
-              <span class="badge-open">${t.status}</span>
-            </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+            <strong>${escapeHtml(t.subject)}</strong>
+            <span class="badge-status st-approved">${escapeHtml(t.status)}</span>
           </div>
-          <div style="font-size:0.82rem;color:#cbd5e1;">${t.message}</div>
-          ${t.reply ? `<div class="ticket-reply"><strong>پاسخ پشتیبانی:</strong> ${t.reply}</div>` : ""}
+          <div style="font-size:0.82rem;color:#cbd5e1;">${escapeHtml(t.message)}</div>
+          ${t.reply ? `<div class="ticket-reply"><strong>پاسخ پشتیبانی:</strong> ${escapeHtml(t.reply)}</div>` : ""}
         </div>
       `).join("");
     }
@@ -1060,17 +1252,23 @@
     function renderMyBets() {
       const body = document.getElementById("myBetsBody");
       if (!appData.bets.length) {
-        body.innerHTML = `<tr><td colspan="5" style="text-align:center;color:#94a3b8;">هنوز شرطی ثبت نشده است.</td></tr>`;
+        body.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#94a3b8;">هنوز شرطی ثبت نشده است.</td></tr>`;
         return;
       }
       body.innerHTML = appData.bets.map((b) =>
-        `<tr><td class="mono">${b.id}</td><td>${b.game}</td><td>${b.stake}</td><td class="mono">${b.mult}</td><td>${b.result}</td></tr>`
+        `<tr>
+          <td class="mono">${escapeHtml(b.id)}</td>
+          <td>${b.mode === "real" ? "واقعی" : "دمو"}</td>
+          <td>${escapeHtml(b.game)}</td>
+          <td>${escapeHtml(b.stake)}</td>
+          <td class="mono">${escapeHtml(b.mult)}</td>
+          <td>${escapeHtml(b.result)}</td>
+        </tr>`
       ).join("");
     }
 
     function openAuth() {
       document.getElementById("authUserInput").value = appData.user.username || "";
-      document.getElementById("authRememberInput").checked = appData.user.remember !== false;
       document.getElementById("authModal").classList.add("show");
     }
     function closeAuth() { document.getElementById("authModal").classList.remove("show"); }
@@ -1079,66 +1277,73 @@
       e.preventDefault();
       const u = document.getElementById("authUserInput").value.trim();
       const p = document.getElementById("authPassInput").value;
-      const rem = document.getElementById("authRememberInput").checked;
-      if (!u) return;
+      if (!u || !p) return;
 
-      if (serverOnline) {
-        try {
-          const res = await apiPost("/auth/login", { username: u, password: p });
-          if (res && res.ok && res.user && typeof res.user.balance === "number") {
-            appData.balance = res.user.balance;
+      try {
+        const res = await apiRequest("/auth/login", "POST", { username: u, password: p });
+        if (res && res.ok && res.token && res.user) {
+          appData.token = res.token;
+          appData.user.loggedIn = true;
+          applyUserBalances(res.user);
+          authenticateSocket();
+          syncMeFromServer();
+          syncDepositsFromServer();
+          syncWithdrawalsFromServer();
+          if (isAdmin()) {
+            syncUsersFromServer();
+            syncFinanceStatsFromServer();
           }
-        } catch {}
+          closeAuth();
+          toast(`ورود موفق به حساب ${res.user.username}`);
+          return;
+        }
+        toast(res?.message || "خطا در ورود");
+      } catch {
+        toast("سرور در دسترس نیست؛ ابتدا سرور Node.js را اجرا کنید.");
       }
-
-      appData.user = { loggedIn: true, remember: rem, username: u };
-      saveData();
-      refreshUI();
-      closeAuth();
-      toast("خوش آمدید " + u);
-    }
-
-    async function quickDeposit() {
-      if (serverOnline) {
-        try {
-          const res = await apiPost("/wallet/deposit", {
-            username: appData.user.username || "guest_sofyan",
-            amount: 1000000
-          });
-          if (res && res.ok && typeof res.balance === "number") {
-            appData.balance = res.balance;
-            saveData(); refreshUI();
-            toast("۱,۰۰۰,۰۰۰ تومان در سرور شارژ شد.");
-            return;
-          }
-        } catch {}
-      }
-      appData.balance += 1000000;
-      saveData(); refreshUI();
-      toast("۱,۰۰۰,۰۰۰ تومان اضافه شد.");
     }
 
     function refreshUI() {
+      const mode = currentMode();
       document.getElementById("balanceDisplay").textContent = fmt(appData.balance);
+
+      const demoBtn = document.getElementById("modeDemoBtn");
+      const realBtn = document.getElementById("modeRealBtn");
+      demoBtn.className = mode === "demo" ? "mode-btn active-demo" : "mode-btn";
+      realBtn.className = mode === "real" ? "mode-btn active-real" : "mode-btn";
+
+      document.getElementById("activeModeBanner").innerHTML = mode === "real"
+        ? `حالت فعال: <strong style="color:#34d399;">حساب واقعی</strong> (موجودی واقعی: ${fmt(appData.real_balance)})`
+        : `حالت فعال: <strong style="color:#38bdf8;">حساب دمو</strong> (موجودی دمو: ${fmt(appData.demo_balance)})`;
+
       const info = document.getElementById("sessionInfo");
       const topBtn = document.getElementById("authTopBtn");
+      const adminUsersNav = document.getElementById("adminUsersNavBtn");
+      const adminFinanceNav = document.getElementById("adminFinanceNavBtn");
+
       if (appData.user.loggedIn && appData.user.username) {
-        info.textContent = "کاربر: " + appData.user.username + (appData.user.remember ? " (ذخیره)" : "");
+        const roleTag = appData.user.role === "admin" ? "ADMIN" : "USER";
+        info.textContent = `${appData.user.username} (${roleTag}) • ${mode === "real" ? "واقعی" : "دمو"}`;
         topBtn.textContent = appData.user.username;
       } else {
         info.textContent = "وضعیت: مهمان";
-        topBtn.textContent = "ورود";
+        topBtn.textContent = "ورود / JWT";
       }
-      renderRounds();
-      renderChat();
-      renderTickets();
-      renderMyBets();
+
+      if (isAdmin()) {
+        adminUsersNav.classList.add("visible");
+        adminFinanceNav.classList.add("visible");
+      } else {
+        adminUsersNav.classList.remove("visible");
+        adminFinanceNav.classList.remove("visible");
+      }
+
+      renderRounds(); renderChat(); renderDeposits(); renderWithdrawals(); renderTickets(); renderMyBets(); renderFinanceStats(); renderUsersAdmin();
     }
 
     document.getElementById("serverUrlInput").value = appData.serverUrl || "http://localhost:4000";
-    refreshUI();
-    connectRealtime();
-    if (!appData.user.loggedIn) setTimeout(openAuth, 350);
+    refreshUI(); updateSlotUI(); connectRealtime();
+    if (!appData.token) setTimeout(openAuth, 350);
   </script>
 </body>
 </html>
