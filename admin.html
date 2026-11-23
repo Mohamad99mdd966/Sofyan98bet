@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>پنل مدیریت صوفیان بت | Sofyan.bet Admin</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html, body { max-width: 100%; overflow-x: hidden; }
+    body {
+      font-family: Tahoma, "Vazirmatn", sans-serif;
+      background-color: #070b14; color: #f8fafc; min-height: 100vh; line-height: 1.6;
+    }
+    button, input, select, textarea { font-family: inherit; color: inherit; }
+    button { cursor: pointer; border: none; background: transparent; touch-action: manipulation; }
+    button:disabled { opacity: 0.45; cursor: not-allowed; }
+    input, select, textarea {
+      background: #111827; color: #f8fafc; border: 1px solid #334155;
+      border-radius: 10px; padding: 10px 12px; width: 100%; font-size: 14px;
+    }
+    .mono { font-family: monospace; direction: ltr; unicode-bidi: isolate; }
+
+    .topbar {
+      background: #0f172a; border-bottom: 1px solid #1e293b;
+      padding: 12px 16px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px;
+      position: sticky; top: 0; z-index: 40;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1rem; color: #fbbf24; }
+    .brand-badge {
+      width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+      background: #ef4444; color: #ffffff; display: grid; place-items: center; font-weight: 900; font-size: 1rem;
+    }
+    .sync-pill {
+      font-size: 0.72rem; padding: 4px 10px; border-radius: 999px;
+      background: rgba(16, 185, 129, 0.14); border: 1px solid #059669; color: #34d399; font-weight: 700;
+    }
+
+    .btn {
+      padding: 8px 12px; border-radius: 9px; font-weight: 700; font-size: 0.8rem;
+      display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+    }
+    .btn-gold { background: #f59e0b; color: #090d16; }
+    .btn-green { background: #10b981; color: #052014; }
+    .btn-red { background: #ef4444; color: #ffffff; }
+    .btn-blue { background: #0284c7; color: #ffffff; }
+    .btn-gray { background: #334155; color: #f8fafc; }
+
+    .nav-row { display: flex; flex-wrap: wrap; gap: 6px; width: 100%; order: 3; }
+    .nav-btn {
+      flex: 1 1 auto; text-align: center; padding: 8px 10px; border-radius: 8px;
+      background: #1e293b; color: #e2e8f0; font-size: 0.78rem; font-weight: 700;
+    }
+    .nav-btn.active { background: #ef4444; color: #ffffff; }
+
+    .container { width: 100%; max-width: 1440px; margin: 0 auto; padding: 14px; }
+    .section { display: none; }
+    .section.active { display: block; }
+    .panel { background: #111827; border: 1px solid #263248; border-radius: 14px; padding: 14px; margin-bottom: 14px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; align-items: start; }
+    .field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; font-size: 0.82rem; color: #cbd5e1; }
+
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-bottom: 14px; }
+    .stat-card { background: #0b101d; border: 1px solid #263248; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 4px; }
+    .stat-label { font-size: 0.78rem; color: #94a3b8; }
+    .stat-val { font-size: 1.15rem; font-weight: 900; color: #fbbf24; }
+    .stat-val.green { color: #34d399; }
+    .stat-val.red { color: #f87171; }
+
+    .item-card { background: #0b101d; border: 1px solid #263248; border-radius: 12px; padding: 12px; margin-bottom: 10px; }
+    .badge { padding: 2px 8px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; }
+    .st-pending { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+    .st-approved { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .st-rejected { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+
+    .table-wrap { width: 100%; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.8rem; min-width: 560px; }
+    th, td { padding: 9px 8px; border-bottom: 1px solid #1e293b; text-align: right; white-space: nowrap; }
+    th { color: #94a3b8; }
+
+    .modal-bg {
+      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85);
+      display: none; align-items: center; justify-content: center; padding: 14px; z-index: 80;
+    }
+    .modal-bg.show { display: flex; }
+    .modal-card {
+      background: #111827; border: 1px solid #334155; border-radius: 14px;
+      padding: 18px; width: 100%; max-width: 400px;
+    }
+
+    .toast-wrap { position: fixed; bottom: 14px; left: 14px; right: 14px; z-index: 95; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
+    .toast { background: #1e293b; border-right: 4px solid #ef4444; padding: 10px 14px; border-radius: 8px; font-size: 0.82rem; color: #fff; max-width: 380px; }
+
+    @media (min-width: 900px) {
+      .nav-row { width: auto; order: 0; }
+      .nav-btn { flex: 0 0 auto; }
+      .container { padding: 20px 24px; }
+    }
+    @media (max-width: 860px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-badge">A</div>
+      <div>
+        <div>کنترل پنل ادمین صوفیان بت</div>
+        <div style="font-size:0.7rem;color:#94a3b8;" id="adminSessionInfo">در حال بررسی نشست ادمین...</div>
+      </div>
+      <span class="sync-pill">متصل به سایت اصلی</span>
+    </div>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+      <button type="button" class="btn btn-gray" onclick="renderAll()">↻ همگام‌سازی</button>
+      <button type="button" class="btn btn-gold" onclick="openAdminLogin()">ورود ادمین</button>
+    </div>
+
+    <div class="nav-row">
+      <button class="nav-btn active" onclick="showAdminTab('overview', this)">📊 نمای کلی و مالی</button>
+      <button class="nav-btn" onclick="showAdminTab('finance', this)">💳 واریز و برداشت</button>
+      <button class="nav-btn" onclick="showAdminTab('users', this)">👥 کاربران و موجودی</button>
+      <button class="nav-btn" onclick="showAdminTab('games', this)">🚀 کنترل بازی و چت</button>
+      <button class="nav-btn" onclick="showAdminTab('tickets', this)">🎫 تیکت‌ها</button>
+      <button class="nav-btn" onclick="showAdminTab('settings', this)">⚙️ تنظیمات سایت</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Overview -->
+    <section class="section active" id="tab-overview">
+      <div class="stats-grid" id="overviewStats"></div>
+      <div class="panel">
+        <h3 style="font-size:0.98rem;margin-bottom:10px;">آخرین شرط‌های ثبت‌شده در سایت اصلی</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>شناسه</th><th>کاربر</th><th>حالت</th><th>بازی</th><th>مبلغ</th><th>ضریب</th><th>نتیجه</th></tr></thead>
+            <tbody id="recentBetsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Deposits & Withdrawals -->
+    <section class="section" id="tab-finance">
+      <div class="grid-2">
+        <div class="panel">
+          <h2 style="font-size:1rem;margin-bottom:12px;">فیش‌های واریزی کارت به کارت</h2>
+          <div id="adminDepositsList"></div>
+        </div>
+        <div class="panel">
+          <h2 style="font-size:1rem;margin-bottom:12px;">درخواست‌های برداشت واقعی</h2>
+          <div id="adminWithdrawalsList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Users & Balances -->
+    <section class="section" id="tab-users">
+      <div class="panel">
+        <h2 style="font-size:1rem;margin-bottom:12px;">مدیریت کاربران، موجودی دمو/واقعی و نقش‌ها</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>شناسه</th>
+                <th>نام کاربری</th>
+                <th>موجودی دمو</th>
+                <th>موجودی واقعی</th>
+                <th>نقش</th>
+                <th>تغییر موجودی / نقش</th>
+              </tr>
+            </thead>
+            <tbody id="adminUsersBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Games & Chat Control -->
+    <section class="section" id="tab-games">
+      <div class="grid-2">
+        <div class="panel">
+          <h2 style="font-size:1rem;margin-bottom:12px;">🚀 کنترل موتور انفجار</h2>
+          <div class="field">
+            <label>ضریب اجباری راند بعدی (خالی = تصادفی)</label>
+            <input type="number" id="forcedCrashMult" step="0.05" min="1.0" placeholder="مثلاً 3.50" />
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button type="button" class="btn btn-green" onclick="setForcedCrash()">اعمال ضریب راند بعدی</button>
+            <button type="button" class="btn btn-red" onclick="clearCrashHistory()">پاکسازی تاریخچه راندها</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2 style="font-size:1rem;margin-bottom:12px;">💬 ارسال پیام رسمی به چت سایت اصلی</h2>
+          <form onsubmit="sendAdminBroadcastChat(event)">
+            <div class="field">
+              <label>متن پیام ادمین</label>
+              <input type="text" id="adminChatInput" required placeholder="پیام اطلاع‌رسانی برای بازیکنان..." />
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button type="submit" class="btn btn-gold">ارسال به چت</button>
+              <button type="button" class="btn btn-red" onclick="clearSiteChat()">پاکسازی چت</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tickets -->
+    <section class="section" id="tab-tickets">
+      <div class="panel">
+        <h2 style="font-size:1rem;margin-bottom:12px;">پاسخگویی به تیکت‌های کاربران</h2>
+        <div id="adminTicketsList"></div>
+      </div>
+    </section>
+
+    <!-- Site Settings -->
+    <section class="section" id="tab-settings">
+      <div class="panel" style="max-width:600px;">
+        <h2 style="font-size:1rem;margin-bottom:12px;">⚙️ تنظیمات سراسری سایت اصلی</h2>
+        <form onsubmit="saveSiteSettings(event)">
+          <div class="field">
+            <label>شماره کارت واریز کارت به کارت</label>
+            <input type="text" id="cfgCardNumber" class="mono" required />
+          </div>
+          <div class="field">
+            <label>نام صاحب کارت</label>
+            <input type="text" id="cfgCardHolder" required />
+          </div>
+          <div class="field">
+            <label>وضعیت سایت اصلی</label>
+            <select id="cfgMaintenance">
+              <option value="0">فعال و در دسترس</option>
+              <option value="1">حالت تعمیرات (نمایش پیام تعمیرات به کاربران)</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-green">ذخیره و اعمال در سایت اصلی</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Admin Login Modal -->
+  <div class="modal-bg" id="adminAuthModal">
+    <div class="modal-card">
+      <h3 style="font-size:1rem;margin-bottom:12px;">ورود به پنل مدیریت</h3>
+      <form onsubmit="handleAdminLogin(event)">
+        <div class="field">
+          <label>نام کاربری ادمین</label>
+          <input type="text" id="admUserInput" required value="admin" />
+        </div>
+        <div class="field">
+          <label>رمز عبور</label>
+          <input type="password" id="admPassInput" required placeholder="رمز عبور ادمین" />
+        </div>
+        <button type="submit" class="btn btn-red" style="width:100%;">ورود به پنل ادمین</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast-wrap" id="toastWrap"></div>
+
+  <script>
+    const STORAGE_KEY = "sofyan_bet_standalone_v1";
+
+    function nowTime() {
+      return new Date().toLocaleTimeString("fa-IR", { hour: "2-digit", minute: "2-digit" });
+    }
+
+    function readSiteState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        const parsed = raw ? JSON.parse(raw) : {};
+        if (!parsed.accounts) parsed.accounts = {};
+        if (!parsed.accounts.admin) {
+          parsed.accounts.admin = {
+            id: 1,
+            username: "admin",
+            password: "admin123",
+            role: "admin",
+            wallet_mode: "real",
+            demo_balance: 50000000,
+            real_balance: 10000000
+          };
+        }
+        if (!parsed.config) {
+          parsed.config = {
+            cardNumber: "6037997410972831",
+            cardHolder: "محمد مددی صوفیانی",
+            maintenance: false,
+            forcedCrashMult: null
+          };
+        }
+        parsed.deposits = Array.isArray(parsed.deposits) ? parsed.deposits : [];
+        parsed.withdrawals = Array.isArray(parsed.withdrawals) ? parsed.withdrawals : [];
+        parsed.tickets = Array.isArray(parsed.tickets) ? parsed.tickets : [];
+        parsed.bets = Array.isArray(parsed.bets) ? parsed.bets : [];
+        parsed.chat = Array.isArray(parsed.chat) ? parsed.chat : [];
+        parsed.rounds = Array.isArray(parsed.rounds) ? parsed.rounds : [];
+        return parsed;
+      } catch {
+        return {
+          sessionUsername: "",
+          accounts: { admin: { id: 1, username: "admin", password: "admin123", role: "admin", wallet_mode: "real", demo_balance: 50000000, real_balance: 10000000 } },
+          config: { cardNumber: "6037997410972831", cardHolder: "محمد مددی صوفیانی", maintenance: false, forcedCrashMult: null },
+          deposits: [], withdrawals: [], tickets: [], bets: [], chat: [], rounds: []
+        };
+      }
+    }
+
+    function writeSiteState(nextState) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
+      renderAll();
+    }
+
+    function fmt(n) {
+      return Number(n || 0).toLocaleString("fa-IR") + " تومان";
+    }
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function toast(msg) {
+      const el = document.createElement("div");
+      el.className = "toast";
+      el.textContent = msg;
+      document.getElementById("toastWrap").appendChild(el);
+      setTimeout(() => el.remove(), 3000);
+    }
+
+    function hasAdminAccess() {
+      const st = readSiteState();
+      const acc = st.accounts[st.sessionUsername];
+      return Boolean(acc && acc.role === "admin");
+    }
+
+    function openAdminLogin() {
+      document.getElementById("adminAuthModal").classList.add("show");
+    }
+
+    function closeAdminLogin() {
+      document.getElementById("adminAuthModal").classList.remove("show");
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const u = document.getElementById("admUserInput").value.trim();
+      const p = document.getElementById("admPassInput").value;
+      const st = readSiteState();
+      const acc = st.accounts[u];
+      if (!acc || acc.password !== p || acc.role !== "admin") {
+        toast("اطلاعات ادمین معتبر نیست (پیش‌فرض: admin / admin123).");
+        return;
+      }
+      st.sessionUsername = acc.username;
+      writeSiteState(st);
+      closeAdminLogin();
+      toast(`ادمین ${acc.username} وارد شد.`);
+    }
+
+    function showAdminTab(name, btnEl) {
+      document.querySelectorAll(".section").forEach((s) => s.classList.remove("active"));
+      document.getElementById("tab-" + name).classList.add("active");
+      document.querySelectorAll(".nav-btn").forEach((b) => b.classList.remove("active"));
+      if (btnEl) btnEl.classList.add("active");
+    }
+
+    function ensureGuard() {
+      if (!hasAdminAccess()) {
+        openAdminLogin();
+        toast("ابتدا با حساب ادمین وارد شوید.");
+        return false;
+      }
+      return true;
+    }
+
+    function reviewDeposit(depId, decision) {
+      if (!ensureGuard()) return;
+      const st = readSiteState();
+      const dep = st.deposits.find((d) => d.id === depId);
+      if (!dep || dep.status !== "pending") return;
+      dep.status = decision;
+      if (decision === "approved" && st.accounts[dep.username]) {
+        st.accounts[dep.username].real_balance = Number(st.accounts[dep.username].real_balance || 0) + Number(dep.amount || 0);
+      }
+      writeSiteState(st);
+      toast(decision === "approved" ? "فیش تایید و حساب واقعی کاربر شارژ شد." : "فیش رد شد.");
+    }
+
+    function reviewWithdrawal(wdrId, decision) {
+      if (!ensureGuard()) return;
+      const st = readSiteState();
+      const wdr = st.withdrawals.find((w) => w.id === wdrId);
+      if (!wdr || wdr.status !== "pending") return;
+      wdr.status = decision;
+      if (decision === "rejected" && st.accounts[wdr.username]) {
+        st.accounts[wdr.username].real_balance = Number(st.accounts[wdr.username].real_balance || 0) + Number(wdr.amount || 0);
+      }
+      writeSiteState(st);
+      toast(decision === "approved" ? "درخواست برداشت تایید شد." : "برداشت رد و مبلغ به حساب کاربر برگشت داده شد.");
+    }
+
+    function updateUserFromAdmin(username) {
+      if (!ensureGuard()) return;
+      const st = readSiteState();
+      const acc = st.accounts[username];
+      if (!acc) return;
+      const demoVal = Math.max(0, Math.round(Number(document.getElementById("demo-inp-" + username).value) || 0));
+      const realVal = Math.max(0, Math.round(Number(document.getElementById("real-inp-" + username).value) || 0));
+      const roleVal = document.getElementById("role-sel-" + username).value;
+      acc.demo_balance = demoVal;
+      acc.real_balance = realVal;
+      acc.role = roleVal;
+      writeSiteState(st);
+      toast(`تغییرات کاربر ${username} ذخیره شد.`);
+    }
+
+    function replyTicket(ticketId) {
+      if (!ensureGuard()) return;
+      const st = readSiteState();
+      const t = st.tickets.find((item) => item.id === ticketId);
+      if (!t) return;
+      const replyTxt = document.getElementById("tck-reply-" + ticketId).value.trim();
+      const statusVal = document.getElementById("tck-status-" + ticketId).value;
+      if (replyTxt) t.reply = replyTxt;
+      t.status = statusVal;
+      writeSiteState(st);
+      toast(`تیکت ${ticketId} بروزرسانی شد.`);
+    }
+
+    function setForcedCrash() {
+      if (!ensureGuard()) return;
+      const raw = document.getElementById("forcedCrashMult").value;
+      const st = readSiteState();
+      const val = Number(raw);
+      st.config.forcedCrashMult = raw !== "" && val >= 1.0 ? Number(val.toFixed(2)) : null;
+      writeSiteState(st);
+      toast(st.config.forcedCrashMult ? `ضریب راند بعدی روی ${st.config.forcedCrashMult}x تنظیم شد.` : "حالت تصادفی راند فعال شد.");
+    }
+
+    function clearCrashHistory() {
+      if (!ensureGuard()) return;
+      const st = readSiteState();
+      st.rounds = [];
+      writeSiteState(st);
+      toast("تاریخچه راندهای انفجار پاک شد.");
+    }
+
+    function sendAdminBroadcastChat(e) {
+      e.preventDefault();
+      if (!ensureGuard()) return;
+      const inp = document.getElementById("adminChatInput");
+      const txt = inp.value.trim();
+      if (!txt) return;
+      const st = readSiteState();
+      st.chat.push({ id: "adm-" + Date.now(), user: "مدیریت صوفیان بت", text: txt, time: nowTime() });
+      st.chat = st.chat.slice(-50);
+      inp.value = "";
+      writeSiteState(st);
+      toast("پیام در چت سایت اصلی ارسال شد.");
+    }
+
+    function clearSiteChat() {
+      if (!ensureGuard()) return;
+      const st = readSiteState();
+      st.chat = [];
+      writeSiteState(st);
+      toast("چت سایت اصلی پاک شد.");
+    }
+
+    function saveSiteSettings(e) {
+      e.preventDefault();
+      if (!ensureGuard()) return;
+      const st = readSiteState();
+      st.config.cardNumber = document.getElementById("cfgCardNumber").value.trim();
+      st.config.cardHolder = document.getElementById("cfgCardHolder").value.trim();
+      st.config.maintenance = document.getElementById("cfgMaintenance").value === "1";
+      writeSiteState(st);
+      toast("تنظیمات در سایت اصلی اعمال شد.");
+    }
+
+    function badgeHtml(status) {
+      if (status === "approved") return `<span class="badge st-approved">تایید شده</span>`;
+      if (status === "rejected") return `<span class="badge st-rejected">رد شده</span>`;
+      return `<span class="badge st-pending">در انتظار بررسی</span>`;
+    }
+
+    function renderAll() {
+      const st = readSiteState();
+      const acc = st.accounts[st.sessionUsername];
+      document.getElementById("adminSessionInfo").textContent = acc && acc.role === "admin"
+        ? `ادمین فعال: ${acc.username}`
+        : "نیاز به ورود ادمین (admin / admin123)";
+
+      const users = Object.values(st.accounts);
+      const depApproved = st.deposits.filter((d) => d.status === "approved").reduce((s, d) => s + Number(d.amount || 0), 0);
+      const wdrApproved = st.withdrawals.filter((w) => w.status === "approved").reduce((s, w) => s + Number(w.amount || 0), 0);
+      const totalReal = users.reduce((s, u) => s + Number(u.real_balance || 0), 0);
+
+      document.getElementById("overviewStats").innerHTML = `
+        <div class="stat-card"><div class="stat-label">تعداد کاربران</div><div class="stat-val">${users.length}</div></div>
+        <div class="stat-card"><div class="stat-label">واریزهای تاییدشده</div><div class="stat-val green">${fmt(depApproved)}</div></div>
+        <div class="stat-card"><div class="stat-label">برداشت‌های تاییدشده</div><div class="stat-val red">${fmt(wdrApproved)}</div></div>
+        <div class="stat-card"><div class="stat-label">کل موجودی واقعی کاربران</div><div class="stat-val">${fmt(totalReal)}</div></div>
+      `;
+
+      document.getElementById("recentBetsBody").innerHTML = st.bets.slice(0, 15).map((b) => `
+        <tr>
+          <td class="mono">${escapeHtml(b.id)}</td>
+          <td>${escapeHtml(b.username || "-")}</td>
+          <td>${b.mode === "real" ? "واقعی" : "دمو"}</td>
+          <td>${escapeHtml(b.game)}</td>
+          <td>${escapeHtml(b.stake)}</td>
+          <td class="mono">${escapeHtml(b.mult)}</td>
+          <td>${escapeHtml(b.result)}</td>
+        </tr>
+      `).join("") || `<tr><td colspan="7" style="text-align:center;color:#94a3b8;">شرطی ثبت نشده است.</td></tr>`;
+
+      document.getElementById("adminDepositsList").innerHTML = st.deposits.map((d) => `
+        <div class="item-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;">
+            <strong>${fmt(d.amount)} (${escapeHtml(d.username)})</strong>
+            ${badgeHtml(d.status)}
+          </div>
+          <div style="font-size:0.8rem;color:#cbd5e1;">فیش: <span class="mono">${escapeHtml(d.receipt_ref)}</span> • ${escapeHtml(d.created_at || "")}</div>
+          ${d.status === "pending" ? `
+            <div style="margin-top:8px;display:flex;gap:8px;">
+              <button type="button" class="btn btn-green" onclick="reviewDeposit('${escapeHtml(d.id)}', 'approved')">✔ تایید</button>
+              <button type="button" class="btn btn-red" onclick="reviewDeposit('${escapeHtml(d.id)}', 'rejected')">✖ رد</button>
+            </div>
+          ` : ""}
+        </div>
+      `).join("") || `<div style="color:#94a3b8;font-size:0.84rem;">فیشی ثبت نشده است.</div>`;
+
+      document.getElementById("adminWithdrawalsList").innerHTML = st.withdrawals.map((w) => `
+        <div class="item-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;">
+            <strong>${fmt(w.amount)} (${escapeHtml(w.username)})</strong>
+            ${badgeHtml(w.status)}
+          </div>
+          <div style="font-size:0.8rem;color:#cbd5e1;">کارت: <span class="mono">${escapeHtml(w.dest_card)}</span> • ${escapeHtml(w.created_at || "")}</div>
+          ${w.status === "pending" ? `
+            <div style="margin-top:8px;display:flex;gap:8px;">
+              <button type="button" class="btn btn-green" onclick="reviewWithdrawal('${escapeHtml(w.id)}', 'approved')">✔ تایید</button>
+              <button type="button" class="btn btn-red" onclick="reviewWithdrawal('${escapeHtml(w.id)}', 'rejected')">✖ رد و بازگشت</button>
+            </div>
+          ` : ""}
+        </div>
+      `).join("") || `<div style="color:#94a3b8;font-size:0.84rem;">درخواست برداشتی ثبت نشده است.</div>`;
+
+      document.getElementById("adminUsersBody").innerHTML = users.map((u) => `
+        <tr>
+          <td class="mono">#${u.id}</td>
+          <td>${escapeHtml(u.username)}</td>
+          <td><input type="number" id="demo-inp-${escapeHtml(u.username)}" value="${Number(u.demo_balance || 0)}" style="width:130px;padding:5px 8px;" /></td>
+          <td><input type="number" id="real-inp-${escapeHtml(u.username)}" value="${Number(u.real_balance || 0)}" style="width:130px;padding:5px 8px;" /></td>
+          <td>
+            <select id="role-sel-${escapeHtml(u.username)}" style="width:90px;padding:5px 8px;">
+              <option value="user" ${u.role === "user" ? "selected" : ""}>user</option>
+              <option value="admin" ${u.role === "admin" ? "selected" : ""}>admin</option>
+            </select>
+          </td>
+          <td><button type="button" class="btn btn-gold" onclick="updateUserFromAdmin('${escapeHtml(u.username)}')">ذخیره</button></td>
+        </tr>
+      `).join("");
+
+      document.getElementById("adminTicketsList").innerHTML = st.tickets.map((t) => `
+        <div class="item-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;">
+            <strong>${escapeHtml(t.subject)} (${escapeHtml(t.username)})</strong>
+            <span class="badge st-approved">${escapeHtml(t.status)}</span>
+          </div>
+          <div style="font-size:0.82rem;color:#cbd5e1;margin-bottom:8px;">${escapeHtml(t.message)}</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <input type="text" id="tck-reply-${escapeHtml(t.id)}" value="${escapeHtml(t.reply || "")}" placeholder="پاسخ ادمین..." style="flex:1;min-width:180px;padding:6px 8px;" />
+            <select id="tck-status-${escapeHtml(t.id)}" style="width:auto;padding:6px 8px;">
+              <option value="در انتظار بررسی" ${t.status === "در انتظار بررسی" ? "selected" : ""}>در انتظار بررسی</option>
+              <option value="پاسخ داده شده" ${t.status === "پاسخ داده شده" ? "selected" : ""}>پاسخ داده شده</option>
+              <option value="بسته شده" ${t.status === "بسته شده" ? "selected" : ""}>بسته شده</option>
+            </select>
+            <button type="button" class="btn btn-green" onclick="replyTicket('${escapeHtml(t.id)}')">ثبت پاسخ</button>
+          </div>
+        </div>
+      `).join("") || `<div style="color:#94a3b8;font-size:0.84rem;">تیکتی ثبت نشده است.</div>`;
+
+      document.getElementById("cfgCardNumber").value = st.config.cardNumber || "6037997410972831";
+      document.getElementById("cfgCardHolder").value = st.config.cardHolder || "محمد مددی صوفیانی";
+      document.getElementById("cfgMaintenance").value = st.config.maintenance ? "1" : "0";
+      if (st.config.forcedCrashMult) {
+        document.getElementById("forcedCrashMult").value = st.config.forcedCrashMult;
+      }
+    }
+
+    window.addEventListener("storage", (e) => {
+      if (e.key === STORAGE_KEY) renderAll();
+    });
+
+    renderAll();
+    if (!hasAdminAccess()) setTimeout(openAdminLogin, 250);
+  </script>
+</body>
+</html>
