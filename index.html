@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>صوفیان بت | Sofyan.bet — کازینو کامل و پشتیبانی</title>
+  <title>صوفیان بت | Sofyan.bet — اتصال زنده به سرور</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     html, body { max-width: 100%; overflow-x: hidden; }
@@ -28,7 +28,6 @@
     }
     .mono { font-family: monospace; direction: ltr; unicode-bidi: isolate; }
 
-    /* Header */
     .topbar {
       background: #111827;
       border-bottom: 1px solid #1f2937;
@@ -48,6 +47,12 @@
       background: #f59e0b; color: #090d16;
       display: grid; place-items: center; font-weight: 900; font-size: 1.15rem;
     }
+    .srv-pill {
+      font-size: 0.72rem; padding: 4px 9px; border-radius: 999px;
+      background: #1e293b; border: 1px solid #334155; color: #fbbf24; font-weight: 700;
+    }
+    .srv-pill.online { color: #34d399; border-color: #059669; background: rgba(16, 185, 129, 0.14); }
+
     .top-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
     .wallet-box {
       background: #1e293b; border: 1px solid #334155;
@@ -63,9 +68,7 @@
     .btn-red { background: #ef4444; color: #ffffff; }
     .btn-gray { background: #334155; color: #f8fafc; }
 
-    .nav-row {
-      display: flex; flex-wrap: wrap; gap: 6px; width: 100%; order: 3;
-    }
+    .nav-row { display: flex; flex-wrap: wrap; gap: 6px; width: 100%; order: 3; }
     .nav-btn {
       flex: 1 1 auto; text-align: center;
       padding: 8px 10px; border-radius: 8px;
@@ -77,54 +80,27 @@
     .section { display: none; }
     .section.active { display: block; }
 
-    .hero {
-      background: linear-gradient(135deg, #172554, #111827 65%);
-      border: 1px solid #2563eb;
-      border-radius: 14px;
-      padding: 18px;
-      margin-bottom: 16px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 16px;
-      align-items: center;
-    }
-    .hero h1 { font-size: clamp(1.2rem, 4.5vw, 1.65rem); color: #fbbf24; margin-bottom: 8px; }
-    .hero p { color: #cbd5e1; font-size: 0.88rem; margin-bottom: 12px; }
-
-    .grid-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
-      gap: 14px;
-      margin-bottom: 20px;
-    }
-    .game-card {
-      background: #111827; border: 1px solid #263248; border-radius: 14px;
-      overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;
-    }
-    .game-card svg { width: 100%; height: 118px; display: block; background: #070b14; }
-    .game-card-body { padding: 14px; }
-    .game-card h3 { font-size: 0.98rem; margin-bottom: 5px; }
-    .game-card p { font-size: 0.8rem; color: #94a3b8; margin-bottom: 12px; }
-
     .panel {
       background: #111827; border: 1px solid #263248; border-radius: 14px;
       padding: 14px; margin-bottom: 14px;
     }
-    .arena {
-      display: grid;
-      grid-template-columns: 330px 1fr;
-      gap: 14px;
-      align-items: start;
+    .grid-cards {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
+      gap: 14px; margin-bottom: 16px;
     }
+    .game-card {
+      background: #111827; border: 1px solid #263248; border-radius: 14px;
+      padding: 14px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px;
+    }
+
+    .arena { display: grid; grid-template-columns: 330px 1fr; gap: 14px; align-items: start; }
     .field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; font-size: 0.82rem; color: #cbd5e1; }
-    .quick-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 10px; }
-    .q-btn { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 6px; font-size: 0.76rem; font-weight: 700; }
 
     /* Crash */
     .crash-grid { display: grid; grid-template-columns: 1.8fr 1fr; gap: 14px; align-items: start; }
     .crash-stage {
       background: #070b14; border: 1px solid #334155; border-radius: 12px;
-      padding: 18px 12px; text-align: center; margin-bottom: 12px; position: relative;
+      padding: 18px 12px; text-align: center; margin-bottom: 12px;
     }
     .crash-mult { font-size: clamp(2.1rem, 8vw, 3.2rem); font-weight: 900; color: #fbbf24; }
     .crash-mult.crashed { color: #f87171; }
@@ -153,27 +129,18 @@
     .mine-cell.gem { background: rgba(16, 185, 129, 0.22); border-color: #10b981; color: #34d399; }
     .mine-cell.bomb { background: rgba(239, 68, 68, 0.25); border-color: #ef4444; color: #f87171; }
 
-    /* Dice */
-    .dice-card { background: #0b101d; border: 1px solid #263248; border-radius: 12px; padding: 22px; text-align: center; }
-    .dice-num { font-size: 2.8rem; font-weight: 900; margin: 8px 0; color: #38bdf8; }
-
-    /* Roulette */
+    /* Dice & Roulette & Plinko */
+    .dice-card, .r-stage { background: #0b101d; border: 1px solid #263248; border-radius: 12px; padding: 22px; text-align: center; }
+    .dice-num, .r-ball { font-size: 2.7rem; font-weight: 900; margin: 8px 0; color: #38bdf8; }
     .r-opts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px; }
     .r-opt { padding: 9px; border-radius: 8px; background: #1e293b; border: 1px solid #334155; font-size: 0.8rem; font-weight: 700; }
     .r-opt.active { background: rgba(245, 158, 11, 0.2); border-color: #f59e0b; color: #fbbf24; }
-    .r-stage { background: #0b101d; border: 1px solid #263248; border-radius: 12px; padding: 24px; text-align: center; }
-    .r-ball { font-size: 2.6rem; font-weight: 900; margin: 8px 0; }
-
-    /* Plinko */
     .plinko-slots { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-top: 12px; }
     .p-slot { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px 3px; text-align: center; font-size: 0.74rem; font-weight: 800; }
     .p-slot.hit { background: #f59e0b; color: #090d16; border-color: #f59e0b; }
 
-    /* Support Tickets */
-    .ticket-item {
-      background: #0b101d; border: 1px solid #263248; border-radius: 12px;
-      padding: 12px; margin-bottom: 10px;
-    }
+    /* Tickets */
+    .ticket-item { background: #0b101d; border: 1px solid #263248; border-radius: 12px; padding: 12px; margin-bottom: 10px; }
     .ticket-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
     .badge-open { background: rgba(16, 185, 129, 0.2); color: #34d399; padding: 2px 8px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; }
     .badge-topic { background: rgba(245, 158, 11, 0.18); color: #fbbf24; padding: 2px 8px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; }
@@ -184,7 +151,6 @@
     th, td { padding: 9px 8px; border-bottom: 1px solid #1e293b; text-align: right; white-space: nowrap; }
     th { color: #94a3b8; }
 
-    /* Modal */
     .modal-bg {
       position: fixed; inset: 0; background: rgba(0, 0, 0, 0.78);
       display: none; align-items: center; justify-content: center; padding: 14px; z-index: 60;
@@ -223,6 +189,7 @@
         <div>صوفیان بت</div>
         <div style="font-size:0.7rem;color:#94a3b8;" id="sessionInfo">وضعیت: مهمان</div>
       </div>
+      <span class="srv-pill" id="serverBadge">سرور: بررسی...</span>
     </div>
 
     <div class="top-actions">
@@ -244,31 +211,42 @@
   </header>
 
   <main class="container">
+    <!-- Server Connection Bar -->
+    <div class="panel" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;">
+      <div style="font-size:0.82rem;color:#cbd5e1;">
+        <strong>آدرس سرور Node.js / WebSocket:</strong>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;flex:1;max-width:560px;">
+        <input type="text" id="serverUrlInput" class="mono" value="http://localhost:4000" style="flex:1;min-width:190px;padding:7px 10px;font-size:0.82rem;" />
+        <button class="btn btn-gold" onclick="applyServerUrl()">اتصال مجدد</button>
+      </div>
+    </div>
+
     <!-- HOME -->
     <section class="section active" id="tab-home">
-      <div class="hero">
-        <div>
-          <h1>کازینو کامل صوفیان بت (Sofyan.bet)</h1>
-          <p>
-            ورود و ثبت‌نام با یادآوری کاربر، ۵ بازی واقعی و تعاملی (انفجار، مین، تاس، رولت، پلینکو)، چت زنده بازیکنان و سیستم تیکت پشتیبانی با انتخاب موضوع.
-          </p>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <button class="btn btn-gold" onclick="goTab('crash')">🚀 بازی انفجار</button>
-            <button class="btn btn-gray" onclick="goTab('support')">🎫 ارسال تیکت پشتیبانی</button>
+      <div class="grid-cards">
+        <div class="game-card">
+          <div>
+            <h3>🚀 انفجار دوشرطه + چت زنده</h3>
+            <p style="font-size:0.8rem;color:#94a3b8;margin-top:4px;">ضریب لحظه‌ای و تاریخچه همگام با سرور WebSocket</p>
           </div>
+          <button class="btn btn-gold" onclick="goTab('crash')">ورود به انفجار</button>
         </div>
-        <div>
-          <svg viewBox="0 0 360 115" style="width:100%;height:110px;background:#070b14;border-radius:12px;border:1px solid #334155;">
-            <path d="M20 95 Q 140 85, 220 52 T 340 18" fill="none" stroke="#fbbf24" stroke-width="4" />
-            <circle cx="340" cy="18" r="6" fill="#34d399" />
-            <text x="22" y="34" fill="#fbbf24" font-size="18" font-weight="bold">SOFYAN CASINO PRO</text>
-            <text x="22" y="56" fill="#94a3b8" font-size="12">سازگار با موبایل + تیکت پشتیبانی</text>
-          </svg>
+        <div class="game-card">
+          <div>
+            <h3>💣 مین، تاس، رولت و پلینکو</h3>
+            <p style="font-size:0.8rem;color:#94a3b8;margin-top:4px;">ثبت نتیجه شرط‌ها و به‌روزرسانی موجودی</p>
+          </div>
+          <button class="btn btn-green" onclick="goTab('mines')">شروع بازی‌ها</button>
+        </div>
+        <div class="game-card">
+          <div>
+            <h3>🎫 تیکت پشتیبانی با موضوع</h3>
+            <p style="font-size:0.8rem;color:#94a3b8;margin-top:4px;">ارسال و دریافت لیست تیکت‌ها از سرور</p>
+          </div>
+          <button class="btn btn-gray" onclick="goTab('support')">مدیریت تیکت‌ها</button>
         </div>
       </div>
-
-      <h2 style="margin-bottom:10px;font-size:1.02rem;">گزینه‌های تصویری بازی‌ها و خدمات</h2>
-      <div class="grid-cards" id="homeCardsGrid"></div>
     </section>
 
     <!-- CRASH -->
@@ -277,13 +255,13 @@
         <div>
           <div class="panel">
             <div style="margin-bottom:10px;">
-              <div style="font-size:0.8rem;color:#94a3b8;margin-bottom:6px;">تاریخچه راندها (برای مشاهده هش لمس کنید):</div>
+              <div style="font-size:0.8rem;color:#94a3b8;margin-bottom:6px;">تاریخچه راندها (کلیک برای مشاهده هش):</div>
               <div class="history-bar" id="historyPills"></div>
             </div>
 
             <div class="crash-stage">
               <div class="crash-mult mono" id="crashMultText">1.00x</div>
-              <div id="crashStatusText" style="color:#94a3b8;font-size:0.86rem;margin-top:4px;">در حال آماده‌سازی راند...</div>
+              <div id="crashStatusText" style="color:#94a3b8;font-size:0.86rem;margin-top:4px;">در انتظار ارتباط با راند...</div>
             </div>
 
             <div class="dual-bets">
@@ -293,7 +271,6 @@
                 <input type="number" id="autoCash1" value="2.00" min="1.10" step="0.05" placeholder="برداشت خودکار" />
                 <button class="btn btn-gold" id="btnSlot1" onclick="handleSlot(1)">ثبت شرط پنل ۱</button>
               </div>
-
               <div class="bet-box">
                 <strong style="color:#38bdf8;font-size:0.9rem;">پنل شرط ۲</strong>
                 <input type="number" id="betAmt2" value="50000" min="1000" />
@@ -331,16 +308,10 @@
     <section class="section" id="tab-mines">
       <div class="arena">
         <div class="panel">
-          <h2 style="font-size:1rem;margin-bottom:10px;">💣 بازی مین (Mines)</h2>
+          <h2 style="font-size:1rem;margin-bottom:10px;">💣 بازی مین</h2>
           <div class="field">
             <label>مبلغ شرط (تومان)</label>
             <input type="number" id="minesBet" value="100000" min="1000" />
-          </div>
-          <div class="quick-row">
-            <button class="q-btn" onclick="scaleField('minesBet', 0.5)">1/2</button>
-            <button class="q-btn" onclick="scaleField('minesBet', 2)">2x</button>
-            <button class="q-btn" onclick="setField('minesBet', 250000)">۲۵۰ هزار</button>
-            <button class="q-btn" onclick="setField('minesBet', 1000000)">۱ میلیون</button>
           </div>
           <div class="field">
             <label>تعداد مین</label>
@@ -349,7 +320,6 @@
               <option value="3" selected>3 مین</option>
               <option value="5">5 مین</option>
               <option value="10">10 مین</option>
-              <option value="20">20 مین</option>
             </select>
           </div>
           <div style="display:flex;flex-direction:column;gap:8px;">
@@ -357,7 +327,6 @@
             <button class="btn btn-green" id="minesCashBtn" onclick="cashoutMines()" disabled>برداشت جایزه (<span id="minesMultTxt">1.00x</span>)</button>
           </div>
         </div>
-
         <div class="panel" style="text-align:center;">
           <div class="mines-grid" id="minesGrid"></div>
           <div id="minesStatus" style="margin-top:12px;font-size:0.86rem;color:#94a3b8;">برای شروع، مبلغ و تعداد مین را تنظیم کنید.</div>
@@ -369,7 +338,7 @@
     <section class="section" id="tab-dice">
       <div class="arena">
         <div class="panel">
-          <h2 style="font-size:1rem;margin-bottom:10px;">🎲 تاس اورجینال (Dice)</h2>
+          <h2 style="font-size:1rem;margin-bottom:10px;">🎲 تاس اورجینال</h2>
           <div class="field">
             <label>مبلغ شرط (تومان)</label>
             <input type="number" id="diceBet" value="50000" min="1000" />
@@ -380,7 +349,6 @@
           </div>
           <button class="btn btn-gold" style="width:100%;" onclick="playDice()">پرتاب تاس</button>
         </div>
-
         <div class="panel">
           <div class="dice-card">
             <div style="font-size:0.82rem;color:#94a3b8;">عدد تاس (۰.۰۰ تا ۹۹.۹۹)</div>
@@ -410,7 +378,6 @@
           </div>
           <button class="btn btn-gold" style="width:100%;" onclick="spinRoulette()">چرخاندن رولت</button>
         </div>
-
         <div class="panel">
           <div class="r-stage">
             <div style="font-size:0.82rem;color:#94a3b8;">نتیجه گردونه</div>
@@ -425,7 +392,7 @@
     <section class="section" id="tab-plinko">
       <div class="arena">
         <div class="panel">
-          <h2 style="font-size:1rem;margin-bottom:10px;">⚪ پلینکو (Plinko)</h2>
+          <h2 style="font-size:1rem;margin-bottom:10px;">⚪ پلینکو</h2>
           <div class="field">
             <label>مبلغ شرط (تومان)</label>
             <input type="number" id="plinkoBet" value="50000" min="1000" />
@@ -440,7 +407,6 @@
           </div>
           <button class="btn btn-gold" style="width:100%;" onclick="dropPlinko()">رها کردن توپ</button>
         </div>
-
         <div class="panel">
           <div style="background:#0b101d;border:1px solid #263248;border-radius:12px;padding:20px;text-align:center;">
             <div style="font-size:0.82rem;color:#94a3b8;">مسیر توپ و ضریب</div>
@@ -476,19 +442,19 @@
               </select>
             </div>
             <div class="field">
-              <label>عنوان کوتاه تیکت</label>
-              <input type="text" id="ticketSubject" required placeholder="مثال: پیگیری واریز کارت‌به‌کارت" />
+              <label>عنوان تیکت</label>
+              <input type="text" id="ticketSubject" required placeholder="مثال: پیگیری واریز" />
             </div>
             <div class="field">
-              <label>شرح کامل درخواست یا مشکل</label>
-              <textarea id="ticketMessage" rows="4" required placeholder="جزئیات را دقیق بنویسید..."></textarea>
+              <label>شرح پیام</label>
+              <textarea id="ticketMessage" rows="4" required placeholder="توضیحات خود را بنویسید..."></textarea>
             </div>
-            <button type="submit" class="btn btn-gold" style="width:100%;">ارسال تیکت پشتیبانی</button>
+            <button type="submit" class="btn btn-gold" style="width:100%;">ارسال تیکت</button>
           </form>
         </div>
 
         <div class="panel">
-          <h2 style="font-size:1rem;margin-bottom:12px;">تیکت‌های ثبت‌شده شما</h2>
+          <h2 style="font-size:1rem;margin-bottom:12px;">تیکت‌های ثبت‌شده</h2>
           <div id="ticketsList"></div>
         </div>
       </div>
@@ -497,7 +463,7 @@
     <!-- HISTORY -->
     <section class="section" id="tab-history">
       <div class="panel">
-        <h2 style="font-size:1rem;margin-bottom:10px;">📜 تاریخچه شرط‌های من</h2>
+        <h2 style="margin-bottom:10px;font-size:1.05rem;">📜 تاریخچه شرط‌های من</h2>
         <div class="table-wrap">
           <table>
             <thead>
@@ -528,7 +494,7 @@
         </div>
         <label style="display:flex;align-items:center;gap:8px;font-size:0.84rem;margin-bottom:14px;cursor:pointer;">
           <input type="checkbox" id="authRememberInput" checked style="width:auto;" />
-          <span>مرا به خاطر بسپار (ذخیره خودکار نشست)</span>
+          <span>مرا به خاطر بسپار</span>
         </label>
         <button type="submit" class="btn btn-gold" style="width:100%;">ذخیره و ورود</button>
       </form>
@@ -539,7 +505,7 @@
   <div class="modal-bg" id="roundModal">
     <div class="modal-card">
       <div class="modal-head">
-        <h3 style="font-size:1rem;">جزئیات و هش راند انفجار</h3>
+        <h3 style="font-size:1rem;">جزئیات راند انفجار</h3>
         <button class="btn btn-gray" onclick="document.getElementById('roundModal').classList.remove('show')">✕</button>
       </div>
       <div id="roundModalBody" style="font-size:0.84rem;display:flex;flex-direction:column;gap:8px;"></div>
@@ -549,31 +515,19 @@
   <div class="toast-wrap" id="toastWrap"></div>
 
   <script>
-    const KEY = "sofyan_bet_full_v1";
+    const KEY = "sofyan_bet_live_client_v1";
     const defaultData = {
+      serverUrl: "http://localhost:4000",
       user: { loggedIn: false, remember: true, username: "" },
       balance: 10000000,
       rounds: [
-        { id: 705, mult: 2.42, hash: "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4", time: "20:10" },
-        { id: 704, mult: 1.31, hash: "2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae", time: "20:08" },
-        { id: 703, mult: 5.18, hash: "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a", time: "20:05" }
+        { id: 1000, mult: 2.15, hash: "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4", time: "20:10" }
       ],
       chat: [
-        { user: "saman_vip", text: "خوش اومدید به صوفیان بت 👋" },
-        { user: "nima_pro", text: "من روی ۲.۰۰ برداشت خودکار گذاشتم." }
+        { user: "saman_vip", text: "در انتظار اتصال به سرور زنده صوفیان بت..." }
       ],
       bets: [],
-      tickets: [
-        {
-          id: "TCK-1001",
-          topic: "بونوس و VIP",
-          priority: "عادی",
-          subject: "خوش‌آمدگویی صوفیان بت",
-          message: "سلام، از عضویت شما خوشحالیم. در صورت نیاز به راهنمایی از همین بخش تیکت بزنید.",
-          status: "پاسخ داده شده",
-          reply: "تیم پشتیبانی صوفیان بت به‌صورت شبانه‌روزی در خدمت شماست."
-        }
-      ]
+      tickets: []
     };
 
     function loadData() {
@@ -581,12 +535,14 @@
         const raw = localStorage.getItem(KEY) || sessionStorage.getItem(KEY);
         if (!raw) return JSON.parse(JSON.stringify(defaultData));
         return Object.assign(JSON.parse(JSON.stringify(defaultData)), JSON.parse(raw));
-      } catch (e) {
+      } catch {
         return JSON.parse(JSON.stringify(defaultData));
       }
     }
 
     let appData = loadData();
+    let serverOnline = false;
+    let wsClient = null;
 
     function saveData() {
       const str = JSON.stringify(appData);
@@ -614,149 +570,204 @@
       document.getElementById("tab-" + name).classList.add("active");
       document.querySelectorAll(".nav-btn").forEach((b) => b.classList.remove("active"));
       if (btnEl) btnEl.classList.add("active");
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      if (name === "support") syncTicketsFromServer();
     }
 
     function goTab(name) {
       const map = { home: 0, crash: 1, mines: 2, dice: 3, roulette: 4, plinko: 5, support: 6, history: 7 };
-      const idx = map[name] ?? 0;
-      showTab(name, document.querySelectorAll(".nav-btn")[idx]);
+      showTab(name, document.querySelectorAll(".nav-btn")[map[name] ?? 0]);
     }
 
-    function setField(id, val) { document.getElementById(id).value = val; }
-    function scaleField(id, factor) {
-      const el = document.getElementById(id);
-      el.value = Math.max(1000, Math.round((Number(el.value) || 0) * factor));
+    function setServerBadge(online) {
+      serverOnline = online;
+      const b = document.getElementById("serverBadge");
+      b.className = online ? "srv-pill online" : "srv-pill";
+      b.textContent = online ? "سرور: متصل (LIVE)" : "سرور: شبیه‌ساز داخلی";
     }
+
+    function getApiBase() {
+      return (appData.serverUrl || "http://localhost:4000").replace(/\/+$/, "");
+    }
+
+    function getWsUrl() {
+      const base = getApiBase();
+      if (base.startsWith("https://")) return base.replace("https://", "wss://");
+      if (base.startsWith("http://")) return base.replace("http://", "ws://");
+      return "ws://localhost:4000";
+    }
+
+    async function apiPost(path, body) {
+      const res = await fetch(getApiBase() + path, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+      return res.json();
+    }
+
+    function connectRealtime() {
+      if (wsClient) { try { wsClient.close(); } catch {} wsClient = null; }
+      fetch(getApiBase() + "/health")
+        .then((r) => r.json())
+        .then((d) => {
+          if (d && d.ok) setServerBadge(true);
+        })
+        .catch(() => setServerBadge(false));
+
+      try {
+        const ws = new WebSocket(getWsUrl());
+        wsClient = ws;
+        ws.onopen = () => {
+          setServerBadge(true);
+          syncTicketsFromServer();
+        };
+        ws.onclose = () => {
+          setServerBadge(false);
+        };
+        ws.onmessage = (ev) => {
+          try {
+            const msg = JSON.parse(ev.data);
+            handleServerWsEvent(msg);
+          } catch {}
+        };
+      } catch {
+        setServerBadge(false);
+      }
+    }
+
+    function applyServerUrl() {
+      appData.serverUrl = document.getElementById("serverUrlInput").value.trim() || "http://localhost:4000";
+      saveData();
+      connectRealtime();
+      toast("در حال اتصال به " + appData.serverUrl + " ...");
+    }
+
+    /* Crash state driven by Server WS when online, or local fallback when offline */
+    let rState = "waiting", cMult = 1.0, tCrash = 2.15, curHash = "";
+    let slots = { 1: { q: 0, a: 0, cash: false }, 2: { q: 0, a: 0, cash: false } };
+
+    function handleServerWsEvent(msg) {
+      if (!msg || !msg.type) return;
+      if (msg.type === "init_state" && msg.data) {
+        if (Array.isArray(msg.data.chat)) {
+          appData.chat = msg.data.chat;
+          renderChat();
+        }
+        if (msg.data.crash && Array.isArray(msg.data.crash.history) && msg.data.crash.history.length) {
+          appData.rounds = msg.data.crash.history;
+          renderRounds();
+        }
+      } else if (msg.type === "crash_start" && msg.data) {
+        rState = "running";
+        cMult = 1.0;
+        curHash = msg.data.roundHash || "";
+        [1, 2].forEach((id) => { slots[id].cash = false; slots[id].a = slots[id].q; slots[id].q = 0; });
+        document.getElementById("crashMultText").className = "crash-mult mono";
+        document.getElementById("crashMultText").textContent = "1.00x";
+        document.getElementById("crashStatusText").textContent = "راند #" + msg.data.roundId + " در حال پرواز (سرور)";
+        updateCrashBtns();
+      } else if (msg.type === "crash_tick" && msg.data) {
+        rState = "running";
+        cMult = Number(msg.data.multiplier) || 1.0;
+        document.getElementById("crashMultText").textContent = cMult.toFixed(2) + "x";
+        updateCrashBtns();
+        [1, 2].forEach((id) => {
+          const av = Number(document.getElementById("autoCash" + id).value);
+          if (slots[id].a > 0 && !slots[id].cash && av >= 1.1 && cMult >= av) cashCrash(id);
+        });
+      } else if (msg.type === "crash_end" && msg.data) {
+        rState = "crashed";
+        const fin = msg.data;
+        appData.rounds.unshift(fin);
+        appData.rounds = appData.rounds.slice(0, 15);
+        [1, 2].forEach((id) => {
+          if (slots[id].a > 0 && !slots[id].cash) addBetLog("انفجار پنل " + id, slots[id].a, 0, 0);
+          slots[id].a = 0;
+        });
+        saveData();
+        refreshUI();
+        const el = document.getElementById("crashMultText");
+        el.textContent = Number(fin.mult).toFixed(2) + "x";
+        el.className = "crash-mult mono crashed";
+        document.getElementById("crashStatusText").textContent = "منفجر شد! راند بعدی تا چند لحظه دیگر...";
+        updateCrashBtns();
+      } else if (msg.type === "crash_waiting" && msg.data) {
+        rState = "waiting";
+        document.getElementById("crashStatusText").textContent = "در انتظار شروع راند #" + msg.data.roundId + "...";
+      } else if (msg.type === "chat_msg" && msg.data) {
+        appData.chat.push(msg.data);
+        appData.chat = appData.chat.slice(-50);
+        renderChat();
+      }
+    }
+
+    /* Local fallback timer when server is offline */
+    setInterval(() => {
+      if (serverOnline) return;
+      if (rState === "waiting") {
+        rState = "running"; cMult = 1.0;
+        tCrash = Number((1.15 + Math.random() * 4.2).toFixed(2));
+        [1, 2].forEach((id) => { slots[id].cash = false; slots[id].a = slots[id].q; slots[id].q = 0; });
+        document.getElementById("crashMultText").className = "crash-mult mono";
+        document.getElementById("crashStatusText").textContent = "در حال پرواز (حالت داخلی)";
+        updateCrashBtns();
+      } else if (rState === "running") {
+        cMult = Number((cMult + 0.03).toFixed(2));
+        document.getElementById("crashMultText").textContent = cMult.toFixed(2) + "x";
+        updateCrashBtns();
+        [1, 2].forEach((id) => {
+          const av = Number(document.getElementById("autoCash" + id).value);
+          if (slots[id].a > 0 && !slots[id].cash && av >= 1.1 && cMult >= av) cashCrash(id);
+        });
+        if (cMult >= tCrash) {
+          rState = "crashed";
+          const nextId = (appData.rounds[0]?.id || 1000) + 1;
+          appData.rounds.unshift({
+            id: nextId, mult: tCrash,
+            hash: Array.from({ length: 64 }, () => "0123456789abcdef"[Math.floor(Math.random() * 16)]).join(""),
+            time: new Date().toLocaleTimeString("fa-IR", { hour: "2-digit", minute: "2-digit" })
+          });
+          appData.rounds = appData.rounds.slice(0, 15);
+          [1, 2].forEach((id) => {
+            if (slots[id].a > 0 && !slots[id].cash) addBetLog("انفجار پنل " + id, slots[id].a, 0, 0);
+            slots[id].a = 0;
+          });
+          saveData(); refreshUI();
+          const el = document.getElementById("crashMultText");
+          el.textContent = tCrash.toFixed(2) + "x";
+          el.className = "crash-mult mono crashed";
+          document.getElementById("crashStatusText").textContent = "منفجر شد!";
+          updateCrashBtns();
+          setTimeout(() => { if (!serverOnline) rState = "waiting"; }, 2200);
+        }
+      }
+    }, 100);
 
     function spendBalance(amt) {
       const n = Number(amt);
       if (!(n > 0)) { toast("مبلغ معتبر وارد کنید."); return false; }
-      if (appData.balance < n) { toast("موجودی کافی نیست! ابتدا واریز کنید."); return false; }
+      if (appData.balance < n) { toast("موجودی کافی نیست."); return false; }
       appData.balance -= n;
-      saveData();
-      refreshUI();
+      saveData(); refreshUI();
       return true;
     }
 
     function addBetLog(game, stake, mult, winAmt) {
       appData.bets.unshift({
         id: "B" + Math.floor(10000 + Math.random() * 90000),
-        game,
-        stake: fmt(stake),
+        game, stake: fmt(stake),
         mult: mult > 0 ? mult.toFixed(2) + "x" : "0.00x",
         result: winAmt > 0 ? "+" + fmt(winAmt) : "باخت"
       });
       appData.bets = appData.bets.slice(0, 50);
       if (winAmt > 0) appData.balance += winAmt;
-      saveData();
-      refreshUI();
-    }
-
-    function refreshUI() {
-      document.getElementById("balanceDisplay").textContent = fmt(appData.balance);
-      const info = document.getElementById("sessionInfo");
-      const topBtn = document.getElementById("authTopBtn");
-      if (appData.user.loggedIn && appData.user.username) {
-        info.textContent = "کاربر: " + appData.user.username + (appData.user.remember ? " (ذخیره)" : "");
-        topBtn.textContent = appData.user.username;
-      } else {
-        info.textContent = "وضعیت: مهمان";
-        topBtn.textContent = "ورود";
-      }
-      renderRounds();
-      renderChat();
-      renderTickets();
-      renderMyBets();
-    }
-
-    function openAuth() {
-      document.getElementById("authUserInput").value = appData.user.username || "";
-      document.getElementById("authRememberInput").checked = appData.user.remember !== false;
-      document.getElementById("authModal").classList.add("show");
-    }
-    function closeAuth() { document.getElementById("authModal").classList.remove("show"); }
-
-    function saveUserAuth(e) {
-      e.preventDefault();
-      const u = document.getElementById("authUserInput").value.trim();
-      const rem = document.getElementById("authRememberInput").checked;
-      if (!u) return;
-      appData.user = { loggedIn: true, remember: rem, username: u };
-      saveData();
-      refreshUI();
-      closeAuth();
-      toast("خوش آمدید " + u);
-    }
-
-    function quickDeposit() {
-      appData.balance += 1000000;
-      saveData();
-      refreshUI();
-      toast("۱,۰۰۰,۰۰۰ تومان به موجودی اضافه شد.");
-    }
-
-    /* Home Visual Cards */
-    const HOME_CARDS = [
-      { id: "crash", title: "انفجار دوشرطه + چت زنده", desc: "برداشت خودکار، تاریخچه هش و چت بازیکنان.", btn: "ورود به انفجار", color: "#fbbf24" },
-      { id: "mines", title: "بازی مین (Mines)", desc: "کشف الماس‌ها در شبکه ۵×۵ و برداشت پله‌ای.", btn: "شروع مین", color: "#34d399" },
-      { id: "dice", title: "تاس اورجینال (Dice)", desc: "تنظیم عدد هدف و احتمال برد با ضریب آنی.", btn: "شروع تاس", color: "#38bdf8" },
-      { id: "roulette", title: "رولت اروپایی", desc: "انتخاب قرمز، مشکی، صفر سبز، زوج و فرد.", btn: "شروع رولت", color: "#f87171" },
-      { id: "plinko", title: "پلینکو (Plinko)", desc: "رها کردن توپ در ۳ سطح ریسک مختلف.", btn: "شروع پلینکو", color: "#c084fc" },
-      { id: "support", title: "ارسال تیکت پشتیبانی", desc: "انتخاب موضوع تیکت و پیگیری پاسخ پشتیبانی.", btn: "باز کردن تیکت‌ها", color: "#fbbf24" }
-    ];
-
-    document.getElementById("homeCardsGrid").innerHTML = HOME_CARDS.map((c) => `
-      <div class="game-card">
-        <svg viewBox="0 0 300 118">
-          <rect width="300" height="118" fill="#090e1a" />
-          <circle cx="245" cy="59" r="34" fill="${c.color}" fill-opacity="0.14" stroke="${c.color}" stroke-width="2" />
-          <text x="20" y="54" fill="${c.color}" font-size="17" font-weight="bold">${c.title}</text>
-          <text x="20" y="78" fill="#94a3b8" font-size="11">صوفیان بت • Sofyan.bet</text>
-        </svg>
-        <div class="game-card-body">
-          <h3>${c.title}</h3>
-          <p>${c.desc}</p>
-          <button class="btn btn-gold" style="width:100%;" onclick="goTab('${c.id}')">${c.btn}</button>
-        </div>
-      </div>
-    `).join("");
-
-    /* Crash */
-    let rState = "waiting", cMult = 1.0, tCrash = 2.2;
-    let slots = { 1: { q: 0, a: 0, cash: false }, 2: { q: 0, a: 0, cash: false } };
-
-    function randHash() {
-      let s = "";
-      for (let i = 0; i < 64; i++) s += "0123456789abcdef"[Math.floor(Math.random() * 16)];
-      return s;
-    }
-
-    function startCrash() {
-      rState = "running"; cMult = 1.0;
-      tCrash = Number((1.1 + Math.random() * 4.5).toFixed(2));
-      [1, 2].forEach((id) => { slots[id].cash = false; slots[id].a = slots[id].q; slots[id].q = 0; });
-      document.getElementById("crashMultText").className = "crash-mult mono";
-      document.getElementById("crashStatusText").textContent = "ضریب در حال افزایش است...";
-      updateCrashBtns();
-    }
-
-    function endCrash() {
-      rState = "crashed";
-      const nextId = (appData.rounds[0]?.id || 705) + 1;
-      appData.rounds.unshift({ id: nextId, mult: tCrash, hash: randHash(), time: new Date().toLocaleTimeString("fa-IR", { hour: "2-digit", minute: "2-digit" }) });
-      appData.rounds = appData.rounds.slice(0, 12);
-      [1, 2].forEach((id) => {
-        if (slots[id].a > 0 && !slots[id].cash) addBetLog("انفجار پنل " + id, slots[id].a, 0, 0);
-        slots[id].a = 0;
-      });
       saveData(); refreshUI();
-      const el = document.getElementById("crashMultText");
-      el.textContent = tCrash.toFixed(2) + "x";
-      el.className = "crash-mult mono crashed";
-      document.getElementById("crashStatusText").textContent = "منفجر شد! راند بعدی تا چند لحظه دیگر...";
-      updateCrashBtns();
-      setTimeout(startCrash, 2400);
+      if (serverOnline) {
+        apiPost("/bets/record", {
+          username: appData.user.username || "guest_sofyan",
+          game, stake, mult, payout: winAmt
+        }).catch(() => {});
+      }
     }
 
     function cashCrash(id) {
@@ -790,29 +801,16 @@
       });
     }
 
-    setInterval(() => {
-      if (rState === "running") {
-        cMult = Number((cMult + 0.03).toFixed(2));
-        document.getElementById("crashMultText").textContent = cMult.toFixed(2) + "x";
-        updateCrashBtns();
-        [1, 2].forEach((id) => {
-          const av = Number(document.getElementById("autoCash" + id).value);
-          if (slots[id].a > 0 && !slots[id].cash && av >= 1.1 && cMult >= av) cashCrash(id);
-        });
-        if (cMult >= tCrash) endCrash();
-      }
-    }, 100);
-
     function renderRounds() {
-      document.getElementById("historyPills").innerHTML = appData.rounds.slice(0, 6).map((r, i) =>
+      document.getElementById("historyPills").innerHTML = appData.rounds.slice(0, 7).map((r, i) =>
         `<button class="h-pill mono ${r.mult >= 2 ? "good" : "bad"}" onclick="openRound(${i})">${Number(r.mult).toFixed(2)}x</button>`
       ).join("");
       document.getElementById("roundsTableBody").innerHTML = appData.rounds.map((r, i) =>
         `<tr style="cursor:pointer;" onclick="openRound(${i})">
           <td class="mono">#${r.id}</td>
           <td class="mono" style="font-weight:800;color:${r.mult >= 2 ? "#34d399" : "#f87171"};">${Number(r.mult).toFixed(2)}x</td>
-          <td class="mono">${r.hash.slice(0, 14)}...</td>
-          <td>${r.time}</td>
+          <td class="mono">${String(r.hash || "").slice(0, 14)}...</td>
+          <td>${r.time || ""}</td>
         </tr>`
       ).join("");
     }
@@ -839,15 +837,20 @@
       const inp = document.getElementById("chatInput");
       const txt = inp.value.trim();
       if (!txt) return;
-      appData.chat.push({ user: appData.user.loggedIn && appData.user.username ? appData.user.username : "مهمان", text: txt });
-      appData.chat = appData.chat.slice(-40);
+      const sender = appData.user.loggedIn && appData.user.username ? appData.user.username : "مهمان";
       inp.value = "";
-      saveData(); renderChat();
+      if (wsClient && wsClient.readyState === 1) {
+        wsClient.send(JSON.stringify({ type: "chat_send", user: sender, text: txt }));
+      } else {
+        appData.chat.push({ user: sender, text: txt });
+        appData.chat = appData.chat.slice(-50);
+        saveData();
+        renderChat();
+      }
     }
 
-    /* Mines */
+    /* Mines, Dice, Roulette, Plinko */
     let mState = { active: false, bet: 0, count: 3, bombs: new Set(), open: new Set(), mult: 1 };
-
     function renderMines() {
       const grid = document.getElementById("minesGrid");
       grid.innerHTML = "";
@@ -869,7 +872,6 @@
       }
       document.getElementById("minesMultTxt").textContent = mState.mult.toFixed(2) + "x";
     }
-
     function startMines() {
       const bet = Number(document.getElementById("minesBet").value);
       const count = Number(document.getElementById("minesCount").value);
@@ -879,10 +881,8 @@
       mState = { active: true, bet, count, bombs, open: new Set(), mult: 1 };
       document.getElementById("minesStartBtn").disabled = true;
       document.getElementById("minesCashBtn").disabled = true;
-      document.getElementById("minesStatus").textContent = "خانه‌های امن را باز کنید!";
       renderMines();
     }
-
     function clickMine(i) {
       if (!mState.active || mState.open.has(i)) return;
       if (mState.bombs.has(i)) {
@@ -890,20 +890,15 @@
         addBetLog("بازی مین", mState.bet, 0, 0);
         document.getElementById("minesStartBtn").disabled = false;
         document.getElementById("minesCashBtn").disabled = true;
-        document.getElementById("minesStatus").textContent = "به مین خوردید!";
-        toast("مین منفجر شد!");
-        renderMines();
-        return;
+        renderMines(); return;
       }
       mState.open.add(i);
       let prob = 1;
       for (let k = 0; k < mState.open.size; k++) prob *= (25 - mState.count - k) / (25 - k);
       mState.mult = Number(Math.max(1.05, 0.97 / prob).toFixed(2));
       document.getElementById("minesCashBtn").disabled = false;
-      document.getElementById("minesStatus").textContent = "جایزه فعلی: " + fmt(Math.round(mState.bet * mState.mult));
       renderMines();
     }
-
     function cashoutMines() {
       if (!mState.active || mState.open.size === 0) return;
       const win = Math.round(mState.bet * mState.mult);
@@ -911,18 +906,15 @@
       addBetLog("بازی مین", mState.bet, mState.mult, win);
       document.getElementById("minesStartBtn").disabled = false;
       document.getElementById("minesCashBtn").disabled = true;
-      document.getElementById("minesStatus").textContent = "برداشت شد: " + fmt(win);
-      toast("جایزه مین برداشت شد: " + fmt(win));
+      toast("برداشت مین: +" + fmt(win));
       renderMines();
     }
     renderMines();
 
-    /* Dice */
     function updateDiceInfo() {
       const t = Number(document.getElementById("diceTarget").value);
-      const m = Number((99 / Math.max(1, t - 1)).toFixed(2));
       document.getElementById("diceTargetVal").textContent = t;
-      document.getElementById("diceMultVal").textContent = m.toFixed(2) + "x";
+      document.getElementById("diceMultVal").textContent = Number((99 / Math.max(1, t - 1)).toFixed(2)).toFixed(2) + "x";
     }
     function playDice() {
       const bet = Number(document.getElementById("diceBet").value);
@@ -936,11 +928,9 @@
       document.getElementById("diceOutNum").style.color = won ? "#34d399" : "#f87171";
       document.getElementById("diceOutMsg").textContent = won ? "بردید! +" + fmt(win) : "باختید!";
       addBetLog("تاس", bet, won ? m : 0, win);
-      toast(won ? "برد در تاس: +" + fmt(win) : "این پرتاب باخت شد.");
     }
     updateDiceInfo();
 
-    /* Roulette */
     const REDS = new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
     let rPick = "red";
     function pickRoulette(p) {
@@ -961,13 +951,10 @@
       else if (rPick === "low" && num >= 1 && num <= 18) won = true;
       const win = won ? Math.round(bet * mult) : 0;
       document.getElementById("rouletteOut").textContent = num;
-      document.getElementById("rouletteOut").style.color = isG ? "#34d399" : isR ? "#f87171" : "#e2e8f0";
-      document.getElementById("rouletteMsg").textContent = won ? "بردید! +" + fmt(win) : "عدد " + num + " — برنده نشدید.";
+      document.getElementById("rouletteMsg").textContent = won ? "بردید! +" + fmt(win) : "عدد " + num;
       addBetLog("رولت", bet, won ? mult : 0, win);
-      toast(won ? "برد رولت: +" + fmt(win) : "عدد " + num);
     }
 
-    /* Plinko */
     const P_MAP = {
       low: [1.5, 1.2, 1.1, 1.0, 1.1, 1.2, 1.5],
       medium: [3.0, 1.8, 1.2, 0.7, 1.2, 1.8, 3.0],
@@ -985,46 +972,71 @@
       for (let i = 0; i < 6; i++) { const goR = Math.random() >= 0.5; if (goR) rCount++; dirs.push(goR ? "R" : "L"); }
       const idx = Math.min(arr.length - 1, rCount);
       const mult = arr[idx];
-      const win = Math.round(bet * mult);
       document.querySelectorAll(".p-slot").forEach((s) => s.classList.remove("hit"));
       document.getElementById("plinkoPath").textContent = dirs.join(" • ");
       document.getElementById("plinkoMult").textContent = mult.toFixed(1) + "x";
       document.getElementById("pslot-" + idx).classList.add("hit");
-      addBetLog("پلینکو", bet, mult, win);
-      toast("فرود در ضریب " + mult.toFixed(1) + "x");
+      addBetLog("پلینکو", bet, mult, Math.round(bet * mult));
     }
     drawPlinkoSlots();
 
-    /* Support Tickets */
-    function submitTicket(e) {
+    /* Tickets (Server + Local) */
+    async function syncTicketsFromServer() {
+      if (!serverOnline) return;
+      try {
+        const res = await fetch(getApiBase() + "/tickets");
+        const data = await res.json();
+        if (data && data.ok && Array.isArray(data.tickets)) {
+          appData.tickets = data.tickets;
+          saveData();
+          renderTickets();
+        }
+      } catch {}
+    }
+
+    async function submitTicket(e) {
       e.preventDefault();
-      const topic = document.getElementById("ticketTopic").value;
-      const priority = document.getElementById("ticketPriority").value;
-      const subject = document.getElementById("ticketSubject").value.trim();
-      const message = document.getElementById("ticketMessage").value.trim();
-      if (!subject || !message) return;
+      const payload = {
+        username: appData.user.username || "مهمان",
+        topic: document.getElementById("ticketTopic").value,
+        priority: document.getElementById("ticketPriority").value,
+        subject: document.getElementById("ticketSubject").value.trim(),
+        message: document.getElementById("ticketMessage").value.trim()
+      };
+      if (!payload.subject || !payload.message) return;
+
+      if (serverOnline) {
+        try {
+          const res = await apiPost("/tickets", payload);
+          if (res && res.ok && res.ticket) {
+            appData.tickets.unshift(res.ticket);
+            document.getElementById("ticketSubject").value = "";
+            document.getElementById("ticketMessage").value = "";
+            saveData();
+            renderTickets();
+            toast("تیکت در سرور ثبت شد.");
+            return;
+          }
+        } catch {}
+      }
 
       appData.tickets.unshift({
         id: "TCK-" + Math.floor(1000 + Math.random() * 9000),
-        topic,
-        priority,
-        subject,
-        message,
+        ...payload,
         status: "در انتظار بررسی",
-        reply: "تیکت شما در صف بررسی کارشناسان پشتیبانی قرار گرفت."
+        reply: "تیکت شما ثبت شد."
       });
-      appData.tickets = appData.tickets.slice(0, 30);
       document.getElementById("ticketSubject").value = "";
       document.getElementById("ticketMessage").value = "";
       saveData();
       renderTickets();
-      toast("تیکت با موضوع «" + topic + "» ثبت شد.");
+      toast("تیکت با موضوع «" + payload.topic + "» ثبت شد.");
     }
 
     function renderTickets() {
       const wrap = document.getElementById("ticketsList");
       if (!appData.tickets.length) {
-        wrap.innerHTML = `<div style="color:#94a3b8;font-size:0.85rem;">هنوز تیکتی ثبت نکرده‌اید.</div>`;
+        wrap.innerHTML = `<div style="color:#94a3b8;font-size:0.85rem;">هنوز تیکتی ثبت نشده است.</div>`;
         return;
       }
       wrap.innerHTML = appData.tickets.map((t) => `
@@ -1040,7 +1052,7 @@
             </div>
           </div>
           <div style="font-size:0.82rem;color:#cbd5e1;">${t.message}</div>
-          <div class="ticket-reply"><strong>پاسخ پشتیبانی:</strong> ${t.reply}</div>
+          ${t.reply ? `<div class="ticket-reply"><strong>پاسخ پشتیبانی:</strong> ${t.reply}</div>` : ""}
         </div>
       `).join("");
     }
@@ -1056,8 +1068,76 @@
       ).join("");
     }
 
+    function openAuth() {
+      document.getElementById("authUserInput").value = appData.user.username || "";
+      document.getElementById("authRememberInput").checked = appData.user.remember !== false;
+      document.getElementById("authModal").classList.add("show");
+    }
+    function closeAuth() { document.getElementById("authModal").classList.remove("show"); }
+
+    async function saveUserAuth(e) {
+      e.preventDefault();
+      const u = document.getElementById("authUserInput").value.trim();
+      const p = document.getElementById("authPassInput").value;
+      const rem = document.getElementById("authRememberInput").checked;
+      if (!u) return;
+
+      if (serverOnline) {
+        try {
+          const res = await apiPost("/auth/login", { username: u, password: p });
+          if (res && res.ok && res.user && typeof res.user.balance === "number") {
+            appData.balance = res.user.balance;
+          }
+        } catch {}
+      }
+
+      appData.user = { loggedIn: true, remember: rem, username: u };
+      saveData();
+      refreshUI();
+      closeAuth();
+      toast("خوش آمدید " + u);
+    }
+
+    async function quickDeposit() {
+      if (serverOnline) {
+        try {
+          const res = await apiPost("/wallet/deposit", {
+            username: appData.user.username || "guest_sofyan",
+            amount: 1000000
+          });
+          if (res && res.ok && typeof res.balance === "number") {
+            appData.balance = res.balance;
+            saveData(); refreshUI();
+            toast("۱,۰۰۰,۰۰۰ تومان در سرور شارژ شد.");
+            return;
+          }
+        } catch {}
+      }
+      appData.balance += 1000000;
+      saveData(); refreshUI();
+      toast("۱,۰۰۰,۰۰۰ تومان اضافه شد.");
+    }
+
+    function refreshUI() {
+      document.getElementById("balanceDisplay").textContent = fmt(appData.balance);
+      const info = document.getElementById("sessionInfo");
+      const topBtn = document.getElementById("authTopBtn");
+      if (appData.user.loggedIn && appData.user.username) {
+        info.textContent = "کاربر: " + appData.user.username + (appData.user.remember ? " (ذخیره)" : "");
+        topBtn.textContent = appData.user.username;
+      } else {
+        info.textContent = "وضعیت: مهمان";
+        topBtn.textContent = "ورود";
+      }
+      renderRounds();
+      renderChat();
+      renderTickets();
+      renderMyBets();
+    }
+
+    document.getElementById("serverUrlInput").value = appData.serverUrl || "http://localhost:4000";
     refreshUI();
-    setTimeout(startCrash, 700);
+    connectRealtime();
     if (!appData.user.loggedIn) setTimeout(openAuth, 350);
   </script>
 </body>
